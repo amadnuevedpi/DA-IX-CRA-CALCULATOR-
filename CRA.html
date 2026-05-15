@@ -24,6 +24,8 @@
   --blue-bg:#E3F2FD;
   --teal:   #00695C;
   --teal-bg:#E0F2F1;
+  --purple: #6A1B9A;
+  --purple-bg:#F3E5F5;
   --white:  #FFFFFF;
   --off-white:#F9F8F4;
   --gray1:  #F4F4F0;
@@ -49,7 +51,7 @@ body{font-family:var(--font-body);font-size:14px;color:var(--text);background:va
 .header::after{content:'';display:block;height:3px;background:linear-gradient(90deg,#C8960C 0%,#FFD54F 40%,#C8960C 100%)}
 .header-inner{max-width:1280px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .header-brand{display:flex;align-items:center;gap:14px}
-.header-seal{width:46px;height:46px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;border:1.5px solid rgba(255,255,255,0.3)}
+.header-seal{width:46px;height:46px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .header-title{display:flex;flex-direction:column}
 .header-agency{font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;opacity:.7;line-height:1;margin-bottom:2px}
 .header-main{font-family:var(--font-display);font-size:19px;line-height:1.1;letter-spacing:.01em}
@@ -115,6 +117,18 @@ body{font-family:var(--font-body);font-size:14px;color:var(--text);background:va
 .sub-section{background:var(--gray1);border-radius:var(--radius);padding:14px 16px;margin-bottom:18px;border:1px solid var(--gray2)}
 .sub-section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px;display:flex;align-items:center;gap:5px}
 .sub-section-title i{font-size:13px;color:var(--green)}
+
+/* ── CUSTOM ASSUMPTIONS ── */
+.custom-assumptions-box{background:var(--purple-bg);border:1.5px solid #CE93D8;border-radius:var(--radius-lg);padding:16px 18px;margin-bottom:22px}
+.custom-assumptions-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--purple);margin-bottom:12px;display:flex;align-items:center;gap:7px}
+.custom-assumptions-title i{font-size:15px}
+.custom-row{display:grid;grid-template-columns:1fr 1fr 36px;gap:8px;align-items:end;margin-bottom:8px}
+.custom-row .field{margin:0}
+.ca-add-btn{display:flex;align-items:center;gap:6px;padding:7px 14px;border:1.5px dashed #CE93D8;border-radius:var(--radius);background:transparent;font-family:var(--font-body);font-size:12.5px;color:var(--purple);cursor:pointer;transition:all .15s;margin-top:4px}
+.ca-add-btn:hover{background:var(--purple-bg);border-color:var(--purple)}
+.ca-del-btn{background:transparent;border:none;cursor:pointer;color:#CE93D8;padding:3px 7px;border-radius:4px;font-size:16px;transition:all .15s;height:36px;display:flex;align-items:center;justify-content:center}
+.ca-del-btn:hover{color:var(--red);background:var(--red-bg)}
+.ca-hint{font-size:11px;color:var(--purple);opacity:.7;margin-top:8px;font-style:italic}
 
 /* ── TABLES ── */
 .table-wrap{overflow-x:auto;border:1px solid var(--gray2);border-radius:var(--radius-lg);margin-bottom:22px}
@@ -191,18 +205,21 @@ body{font-family:var(--font-body);font-size:14px;color:var(--text);background:va
 .profit-banner.loss{background:var(--red-bg);color:var(--red);border:1px solid #EF9A9A}
 .profit-banner i{font-size:20px}
 
-/* ── RANGE SLIDER ── */
-.slider-wrap{display:flex;align-items:center;gap:10px}
-.slider-wrap input[type=range]{flex:1;accent-color:var(--green)}
-.slider-val{min-width:50px;text-align:right;font-weight:600;font-size:13px;color:var(--green)}
-
 /* ── FOOTER ── */
 .page-footer{text-align:center;padding:20px 24px;font-size:11.5px;color:var(--muted);border-top:1px solid var(--gray2);margin-top:28px}
+
+/* ── CUSTOM ASSUMPTIONS TABLE in results/pdf ── */
+.custom-assumption-display{background:var(--purple-bg);border:1px solid #CE93D8;border-radius:var(--radius);padding:12px 16px;margin-bottom:22px}
+.custom-assumption-display .card-h{color:var(--purple)}
+.ca-display-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:0.5px solid #E1BEE7;gap:12px;font-size:13px}
+.ca-display-row:last-child{border-bottom:none}
+.ca-display-row .lbl{color:var(--muted)}
+.ca-display-row .val{font-weight:500;color:var(--text)}
 
 /* ── PRINT / PDF ── */
 @media print {
   .header{position:static;box-shadow:none}
-  .header::after,.template-section,.tabs-nav,.header-actions,.add-row-btn,.row-del,.btn-header,.page-footer,.tpl-buttons{display:none!important}
+  .header::after,.template-section,.tabs-nav,.header-actions,.add-row-btn,.row-del,.btn-header,.page-footer,.tpl-buttons,.ca-add-btn,.ca-del-btn{display:none!important}
   .tab-content{padding:0}
   .tabs-wrapper{border:none;box-shadow:none}
   body{background:white;font-size:11px}
@@ -214,12 +231,14 @@ body{font-family:var(--font-body);font-size:14px;color:var(--text);background:va
   .metric-card{padding:8px 10px;border:1px solid #ccc}
   .metric-value{font-size:16px}
   .metric-label{font-size:9px}
+  .custom-assumptions-box{border:1px solid #CE93D8}
 }
 
 /* ── RESPONSIVE ── */
 @media(max-width:900px){
   .form-grid.four{grid-template-columns:1fr 1fr}
   .be-grid{grid-template-columns:1fr 1fr}
+  .custom-row{grid-template-columns:1fr 1fr 36px}
 }
 @media(max-width:700px){
   .form-grid{grid-template-columns:1fr}
@@ -229,6 +248,7 @@ body{font-family:var(--font-body);font-size:14px;color:var(--text);background:va
   .be-grid{grid-template-columns:1fr 1fr}
   .summary-grid{grid-template-columns:repeat(2,1fr)}
   .main{padding:12px}
+  .custom-row{grid-template-columns:1fr 36px}
 }
 
 /* ── PRINT HEADER ── */
@@ -246,12 +266,12 @@ body{font-family:var(--font-body);font-size:14px;color:var(--text);background:va
 <header class="header">
   <div class="header-inner">
     <div class="header-brand">
-      <div class="header-seal" style="background:transparent;border:none;padding:0;width:48px;height:48px;display:flex;align-items:center;justify-content:center">
+      <div class="header-seal" style="width:48px;height:48px">
         <img src="https://raw.githubusercontent.com/amadnuevedpi/DA-AMAD-BP-logos/99315fdf63d3a2df62d37e6bd86c4579fef7189d/da.png"
-             alt="Department of Agriculture logo"
+             alt="DA logo"
              style="width:48px;height:48px;object-fit:contain;filter:brightness(0) invert(1)"
              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <div style="display:none;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.3);align-items:center;justify-content:center;font-size:20px;color:#fff"><i class="ti ti-plant-2" aria-hidden="true"></i></div>
+        <div style="display:none;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.3);align-items:center;justify-content:center;font-size:20px;color:#fff"><i class="ti ti-plant-2"></i></div>
       </div>
       <div class="header-title">
         <span class="header-agency">Republic of the Philippines · Department of Agriculture · RFO IX</span>
@@ -260,9 +280,9 @@ body{font-family:var(--font-body);font-size:14px;color:var(--text);background:va
       </div>
     </div>
     <div class="header-actions">
-      <button class="btn-header" id="btn-excel"><i class="ti ti-file-spreadsheet" aria-hidden="true"></i> Excel</button>
-      <button class="btn-header gold" id="btn-pdf"><i class="ti ti-file-type-pdf" aria-hidden="true"></i> PDF Report</button>
-      <button class="btn-header" id="btn-print"><i class="ti ti-printer" aria-hidden="true"></i> Print</button>
+      <button class="btn-header" id="btn-excel"><i class="ti ti-file-spreadsheet"></i> Excel</button>
+      <button class="btn-header gold" id="btn-pdf"><i class="ti ti-file-type-pdf"></i> PDF Report</button>
+      <button class="btn-header" id="btn-print"><i class="ti ti-printer"></i> Print</button>
     </div>
   </div>
 </header>
@@ -276,7 +296,7 @@ body{font-family:var(--font-body);font-size:14px;color:var(--text);background:va
   <div class="summary-grid" id="summary-grid"></div>
 
   <div class="template-section no-print">
-    <span class="template-label"><i class="ti ti-template" aria-hidden="true"></i> Template</span>
+    <span class="template-label"><i class="ti ti-template"></i> Template</span>
     <div class="tpl-buttons" id="tpl-buttons"></div>
   </div>
 
@@ -292,10 +312,10 @@ body{font-family:var(--font-body);font-size:14px;color:var(--text);background:va
 
 <script>
 /* ==========================================================
-   TEMPLATES
+   TEMPLATES  — 8 commodities only
 ========================================================== */
 const TEMPLATES = {
-  rice: {
+  palay: {
     label:"Palay (Rice)", icon:"ti-plant-2",
     a:{
       commodity:"Palay (Rice)", scale:"1", scaleUnit:"Hectare",
@@ -314,6 +334,14 @@ const TEMPLATES = {
       transportFarmToMill:"1", millingFee:"2.50", dryingFee:"0.50",
       remarks:""
     },
+    // Custom assumptions specific to this commodity
+    customAssumptions:[
+      {id:1, label:"Moisture Content at Harvest (%)", value:"24"},
+      {id:2, label:"Target Moisture Content (dried)", value:"14"},
+      {id:3, label:"Seeding Rate (kg/ha)", value:"40"},
+      {id:4, label:"No. of Hills per Hectare", value:"200000"},
+      {id:5, label:"Transplanting Age (DAS)", value:"21"},
+    ],
     items:[
       {id:1,cat:"A. Cash Costs",sub:"1. Land Preparation",desc:"Plowing – Mechanical (Tractor)",qty:"1",unit:"PW",price:"3500",notes:""},
       {id:2,cat:"A. Cash Costs",sub:"1. Land Preparation",desc:"Harrowing / Final Leveling",qty:"1",unit:"PW",price:"1000",notes:""},
@@ -354,6 +382,13 @@ const TEMPLATES = {
       transportFarmToMill:"0.80", millingFee:"1.50", dryingFee:"0.40",
       remarks:""
     },
+    customAssumptions:[
+      {id:1, label:"Plant Spacing (cm × cm)", value:"75 × 25"},
+      {id:2, label:"No. of Plants per Hectare", value:"53333"},
+      {id:3, label:"Seeding Rate (kg/ha)", value:"15"},
+      {id:4, label:"Target Moisture Content (%)", value:"13"},
+      {id:5, label:"Fall Armyworm (FAW) Risk Level", value:"High"},
+    ],
     items:[
       {id:1,cat:"A. Cash Costs",sub:"1. Land Preparation",desc:"Plowing – Disk Plow",qty:"1",unit:"PW",price:"3000",notes:""},
       {id:2,cat:"A. Cash Costs",sub:"1. Land Preparation",desc:"Harrowing",qty:"1",unit:"PW",price:"900",notes:""},
@@ -371,8 +406,8 @@ const TEMPLATES = {
       {id:14,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Bagging & Twine",qty:"100",unit:"Sack",price:"12",notes:""},
     ]
   },
-  bangus: {
-    label:"Bangus (Milkfish)", icon:"ti-fish",
+  fish: {
+    label:"Fish (Aquaculture)", icon:"ti-fish",
     a:{
       commodity:"Bangus – Milkfish (Pond)", scale:"1", scaleUnit:"Hectare",
       period:"January – June 2026", region:"Region IX – Zamboanga Peninsula",
@@ -390,6 +425,15 @@ const TEMPLATES = {
       transportFarmToMill:"2", millingFee:"0", dryingFee:"0",
       remarks:""
     },
+    customAssumptions:[
+      {id:1, label:"Species / Variety", value:"Bangus (Chanos chanos)"},
+      {id:2, label:"Stocking Density (pcs/ha)", value:"5000"},
+      {id:3, label:"Average Body Weight at Harvest (g)", value:"600"},
+      {id:4, label:"Survival Rate (%)", value:"90"},
+      {id:5, label:"Salinity Level (ppt)", value:"15–25"},
+      {id:6, label:"Feed Conversion Ratio (FCR)", value:"1.8"},
+      {id:7, label:"Water Source / Tidal Flow", value:"Tidal canal"},
+    ],
     items:[
       {id:1,cat:"A. Cash Costs",sub:"1. Pond Preparation",desc:"Pond Draining & Tilling",qty:"1",unit:"PW",price:"3500",notes:""},
       {id:2,cat:"A. Cash Costs",sub:"1. Pond Preparation",desc:"Liming (Dolomite)",qty:"200",unit:"kg",price:"12",notes:""},
@@ -408,44 +452,8 @@ const TEMPLATES = {
       {id:15,cat:"A. Cash Costs",sub:"6. Overhead",desc:"Permits & Licenses",qty:"1",unit:"Per year",price:"1500",notes:""},
     ]
   },
-  tilapia: {
-    label:"Tilapia (Pond)", icon:"ti-fish-off",
-    a:{
-      commodity:"Tilapia – Freshwater Pond", scale:"1", scaleUnit:"Hectare",
-      period:"January – June 2026", region:"Region IX – Zamboanga Peninsula",
-      analyst:"", designation:"", office:"", date:"",
-      averageYield:"8000", yieldUnit:"kg", farmgatePrice:"95",
-      croppingSystem:"Semi-intensive Freshwater Pond", irrigationSource:"Creek / Well",
-      soilType:"Clay", slope:"Flat",
-      seedVariety:"GIFT Tilapia fingerlings (5–10g)", seedingMethod:"Stocking",
-      cropDuration:"4–5 months",
-      noOfCropsPerYear:"2", laborRateMale:"400", laborRateFemale:"350",
-      landCost:"12000", interestRate:"8", insuranceCost:"2000",
-      nonCashPct:"8",
-      assemblerMarkup:"10", wholesalerMarkup:"8", retailerMarkup:"10",
-      dryingRecovery:"100", millingRecovery:"100",
-      transportFarmToMill:"2", millingFee:"0", dryingFee:"0",
-      remarks:""
-    },
-    items:[
-      {id:1,cat:"A. Cash Costs",sub:"1. Pond Preparation",desc:"Pond Draining & Drying",qty:"1",unit:"PW",price:"3000",notes:""},
-      {id:2,cat:"A. Cash Costs",sub:"1. Pond Preparation",desc:"Liming (Quicklime)",qty:"300",unit:"kg",price:"10",notes:""},
-      {id:3,cat:"A. Cash Costs",sub:"1. Pond Preparation",desc:"Organic Fertilizer (Chicken Dung)",qty:"500",unit:"kg",price:"8",notes:""},
-      {id:4,cat:"A. Cash Costs",sub:"2. Stocking",desc:"GIFT Tilapia Fingerlings",qty:"10000",unit:"Piece",price:"0.80",notes:"₱0.80/piece"},
-      {id:5,cat:"A. Cash Costs",sub:"3. Feeds & Inputs",desc:"Commercial Fish Pellets (40 kg)",qty:"35",unit:"Bag",price:"1350",notes:"28% protein"},
-      {id:6,cat:"A. Cash Costs",sub:"3. Feeds & Inputs",desc:"Rice Bran / Supplemental Feed",qty:"500",unit:"kg",price:"14",notes:""},
-      {id:7,cat:"A. Cash Costs",sub:"3. Feeds & Inputs",desc:"Probiotics & Water Conditioner",qty:"2",unit:"Bottle",price:"700",notes:""},
-      {id:8,cat:"A. Cash Costs",sub:"4. Labor",desc:"Pond Caretaker / Feeder",qty:"120",unit:"Manday",price:"300",notes:""},
-      {id:9,cat:"A. Cash Costs",sub:"4. Labor",desc:"Pump Operation (Fuel/Electricity)",qty:"1",unit:"Per crop",price:"3500",notes:""},
-      {id:10,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Harvesting Labor (Seine net)",qty:"5",unit:"Manday",price:"400",notes:""},
-      {id:11,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Ice – Harvest Preservation",qty:"150",unit:"kg",price:"25",notes:""},
-      {id:12,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Baskets / Packaging",qty:"30",unit:"Piece",price:"60",notes:""},
-      {id:13,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Transport to Market",qty:"1",unit:"Trip",price:"2000",notes:""},
-      {id:14,cat:"A. Cash Costs",sub:"6. Overhead",desc:"Pond Lease",qty:"1",unit:"Per crop",price:"6000",notes:""},
-    ]
-  },
-  vegetables: {
-    label:"Vegetables (HVC)", icon:"ti-leaf",
+  hvc: {
+    label:"High-Value Crops", icon:"ti-leaf",
     a:{
       commodity:"Vegetables – High Value Crops", scale:"1000", scaleUnit:"sq.m.",
       period:"January – March 2026", region:"Region IX – Zamboanga Peninsula",
@@ -463,6 +471,14 @@ const TEMPLATES = {
       transportFarmToMill:"1.50", millingFee:"0", dryingFee:"0",
       remarks:""
     },
+    customAssumptions:[
+      {id:1, label:"Crop Type / Commodity", value:"Tomato / Ampalaya / Eggplant"},
+      {id:2, label:"Planting Distance (cm × cm)", value:"50 × 60"},
+      {id:3, label:"No. of Plants (per 1,000 sq.m.)", value:"3333"},
+      {id:4, label:"Harvest Frequency / Picking", value:"3× per week"},
+      {id:5, label:"Market Outlet", value:"Wet market / Consolidator"},
+      {id:6, label:"Organic / Inorganic System", value:"Integrated (partly organic)"},
+    ],
     items:[
       {id:1,cat:"A. Cash Costs",sub:"1. Land Preparation",desc:"Land Clearing & Tillage",qty:"3",unit:"Manday",price:"400",notes:""},
       {id:2,cat:"A. Cash Costs",sub:"1. Land Preparation",desc:"Raised Bed Formation",qty:"5",unit:"Manday",price:"400",notes:""},
@@ -479,6 +495,52 @@ const TEMPLATES = {
       {id:13,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Harvesting Labor",qty:"6",unit:"Manday",price:"400",notes:"Multiple harvests"},
       {id:14,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Crates / Packaging",qty:"30",unit:"Crate",price:"45",notes:"Reusable"},
       {id:15,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Transport to Market",qty:"4",unit:"Trip",price:"350",notes:""},
+    ]
+  },
+  rubber: {
+    label:"Rubber", icon:"ti-circle-dotted",
+    a:{
+      commodity:"Rubber – Latex / Dried Cup Lump", scale:"1", scaleUnit:"Hectare",
+      period:"January – December 2026", region:"Region IX – Zamboanga Peninsula",
+      analyst:"", designation:"", office:"", date:"",
+      averageYield:"1200", yieldUnit:"kg DRC", farmgatePrice:"55",
+      croppingSystem:"Smallholder Rubber Plantation", irrigationSource:"Rainfed",
+      soilType:"Deep, well-drained loam", slope:"Flat to gently sloping",
+      seedVariety:"RRIM 600 / PB 217 / RRIT 251", seedingMethod:"Budded stumps (15–18 mo)",
+      cropDuration:"Perennial (tapping at 6–7 yrs)",
+      noOfCropsPerYear:"1", laborRateMale:"400", laborRateFemale:"350",
+      landCost:"8000", interestRate:"6", insuranceCost:"500",
+      nonCashPct:"15",
+      assemblerMarkup:"8", wholesalerMarkup:"6", retailerMarkup:"5",
+      dryingRecovery:"50", millingRecovery:"95",
+      transportFarmToMill:"1.50", millingFee:"2", dryingFee:"0",
+      remarks:""
+    },
+    customAssumptions:[
+      {id:1, label:"Clone / Variety", value:"RRIM 600"},
+      {id:2, label:"No. of Trees per Hectare", value:"500"},
+      {id:3, label:"Tapping System", value:"S/2 d2 (half spiral, 2-day rest)"},
+      {id:4, label:"Tapping Days per Year", value:"180"},
+      {id:5, label:"Dry Rubber Content (DRC %)", value:"50"},
+      {id:6, label:"Average Yield per Tree per Tapping (g)", value:"40"},
+      {id:7, label:"Age of Plantation (years)", value:"8"},
+      {id:8, label:"Stimulation Applied", value:"Ethephon 2.5% – 6×/yr"},
+    ],
+    items:[
+      {id:1,cat:"A. Cash Costs",sub:"1. Land Preparation",desc:"Weeding & Brushing (Ring)",qty:"6",unit:"Manday",price:"400",notes:"Per ha, 3× per year"},
+      {id:2,cat:"A. Cash Costs",sub:"1. Land Preparation",desc:"Lining & Upkeep",qty:"2",unit:"Manday",price:"400",notes:""},
+      {id:3,cat:"A. Cash Costs",sub:"4. Fertilizer & Pest Management",desc:"Complete Fertilizer 15-15-15",qty:"2",unit:"Bag",price:"1600",notes:""},
+      {id:4,cat:"A. Cash Costs",sub:"4. Fertilizer & Pest Management",desc:"Muriate of Potash 0-0-60",qty:"1",unit:"Bag",price:"1850",notes:""},
+      {id:5,cat:"A. Cash Costs",sub:"4. Fertilizer & Pest Management",desc:"Fungicide (Tapping Panel Dry)",qty:"1",unit:"Bottle",price:"680",notes:"Tapping panel disease"},
+      {id:6,cat:"A. Cash Costs",sub:"4. Fertilizer & Pest Management",desc:"Weedicide (Pre-emergent)",qty:"2",unit:"Liter",price:"450",notes:""},
+      {id:7,cat:"A. Cash Costs",sub:"4. Fertilizer & Pest Management",desc:"Stimulant (Ethephon 2.5%)",qty:"1",unit:"Bottle",price:"550",notes:"6 applications/yr"},
+      {id:8,cat:"A. Cash Costs",sub:"4. Fertilizer & Pest Management",desc:"Fertilizer Application Labor",qty:"4",unit:"Manday",price:"400",notes:""},
+      {id:9,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Tapper Labor (Tapping & Collecting)",qty:"180",unit:"Manday",price:"350",notes:"Daily tapping"},
+      {id:10,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Coagulant – Formic Acid",qty:"10",unit:"Liter",price:"180",notes:""},
+      {id:11,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Tapping Cups & Accessories",qty:"1",unit:"Lot",price:"1500",notes:"Replacement/season"},
+      {id:12,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Processing – Crepe/Sheet Drying",qty:"1",unit:"Per crop",price:"3000",notes:""},
+      {id:13,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Sacks & Packaging",qty:"30",unit:"Sack",price:"15",notes:""},
+      {id:14,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Hauling / Transport to Buyer",qty:"1",unit:"Trip",price:"2500",notes:""},
     ]
   },
   swine: {
@@ -500,6 +562,15 @@ const TEMPLATES = {
       transportFarmToMill:"3", millingFee:"0", dryingFee:"0",
       remarks:""
     },
+    customAssumptions:[
+      {id:1, label:"Breed / Genotype", value:"Landrace × Duroc (F1 crossbred)"},
+      {id:2, label:"Initial Body Weight at Entry (kg)", value:"7–10"},
+      {id:3, label:"Target Final Weight at Sale (kg)", value:"90–100"},
+      {id:4, label:"Average Daily Gain (ADG, g/day)", value:"600"},
+      {id:5, label:"Feed Conversion Ratio (FCR)", value:"2.8"},
+      {id:6, label:"Mortality Rate (%)", value:"3"},
+      {id:7, label:"Backyard / Commercial Classification", value:"Backyard"},
+    ],
     items:[
       {id:1,cat:"A. Cash Costs",sub:"1. Animal & Housing",desc:"Weaner Piglets (7–10 kg)",qty:"10",unit:"Head",price:"3500",notes:"Good quality breed"},
       {id:2,cat:"A. Cash Costs",sub:"1. Animal & Housing",desc:"Housing Repair & Bedding",qty:"1",unit:"Lot",price:"5000",notes:""},
@@ -536,6 +607,16 @@ const TEMPLATES = {
       transportFarmToMill:"2", millingFee:"0", dryingFee:"0",
       remarks:""
     },
+    customAssumptions:[
+      {id:1, label:"Breed / Strain", value:"Ross 308 / Cobb 500"},
+      {id:2, label:"Stocking Density (birds/sq.m.)", value:"10"},
+      {id:3, label:"Target Live Weight at Harvest (kg)", value:"1.8"},
+      {id:4, label:"Average Daily Gain (ADG, g/day)", value:"55"},
+      {id:5, label:"Feed Conversion Ratio (FCR)", value:"1.7"},
+      {id:6, label:"Mortality Rate (%)", value:"4"},
+      {id:7, label:"Floor Space per Bird (sq.m.)", value:"0.10"},
+      {id:8, label:"Brooding Temperature (°C, wk 1)", value:"33–35"},
+    ],
     items:[
       {id:1,cat:"A. Cash Costs",sub:"1. Animal & Housing",desc:"Day-Old Chicks (DOC)",qty:"500",unit:"Head",price:"55",notes:"Ross 308"},
       {id:2,cat:"A. Cash Costs",sub:"1. Animal & Housing",desc:"Housing Preparation & Litter",qty:"1",unit:"Lot",price:"3500",notes:"Rice hull / sawdust"},
@@ -552,38 +633,49 @@ const TEMPLATES = {
       {id:13,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Transport to Slaughter / Market",qty:"1",unit:"Trip",price:"3000",notes:""},
     ]
   },
-  coconut: {
-    label:"Coconut (Copra)", icon:"ti-circle-dotted",
+  livestock: {
+    label:"Other Livestock", icon:"ti-horse-toy",
     a:{
-      commodity:"Coconut – Copra Production", scale:"1", scaleUnit:"Hectare",
+      commodity:"Livestock – Cattle / Carabao / Goat", scale:"5", scaleUnit:"Head",
       period:"January – December 2026", region:"Region IX – Zamboanga Peninsula",
       analyst:"", designation:"", office:"", date:"",
-      averageYield:"1200", yieldUnit:"kg copra", farmgatePrice:"42",
-      croppingSystem:"Coconut Monoculture / Intercrop", irrigationSource:"Rainfed",
-      soilType:"Sandy clay loam", slope:"Flat to undulating",
-      seedVariety:"Tall or Dwarf × Tall hybrid", seedingMethod:"Established palms",
-      cropDuration:"Annual / Perennial (bearing age 6–7 yrs)",
-      noOfCropsPerYear:"3", laborRateMale:"400", laborRateFemale:"350",
-      landCost:"8000", interestRate:"6", insuranceCost:"500",
-      nonCashPct:"15",
-      assemblerMarkup:"8", wholesalerMarkup:"6", retailerMarkup:"5",
-      dryingRecovery:"38", millingRecovery:"95",
-      transportFarmToMill:"1.50", millingFee:"0", dryingFee:"2",
+      averageYield:"180", yieldUnit:"kg/head", farmgatePrice:"200",
+      croppingSystem:"Semi-intensive / Pasture Raising", irrigationSource:"N/A",
+      soilType:"N/A", slope:"Hilly / Upland",
+      seedVariety:"Brahman × Local / Philippine Native", seedingMethod:"Owned / Purchased",
+      cropDuration:"18–24 months grow-out",
+      noOfCropsPerYear:"1", laborRateMale:"400", laborRateFemale:"350",
+      landCost:"5000", interestRate:"6", insuranceCost:"2000",
+      nonCashPct:"10",
+      assemblerMarkup:"10", wholesalerMarkup:"8", retailerMarkup:"10",
+      dryingRecovery:"100", millingRecovery:"100",
+      transportFarmToMill:"5", millingFee:"0", dryingFee:"0",
       remarks:""
     },
+    customAssumptions:[
+      {id:1, label:"Animal Type", value:"Cattle / Carabao / Goat"},
+      {id:2, label:"Breed / Genotype", value:"Brahman × Local crossbred"},
+      {id:3, label:"Initial Body Weight (kg)", value:"150"},
+      {id:4, label:"Target Final Body Weight (kg)", value:"350"},
+      {id:5, label:"Average Daily Gain (ADG, g/day)", value:"450"},
+      {id:6, label:"Mortality Rate (%)", value:"2"},
+      {id:7, label:"Grazing Area per Head (ha)", value:"0.5"},
+      {id:8, label:"Dressing Percentage (%)", value:"55"},
+    ],
     items:[
-      {id:1,cat:"A. Cash Costs",sub:"1. Land Preparation",desc:"Ring Weeding / Bole Cleaning",qty:"4",unit:"Manday",price:"400",notes:"Per ha"},
-      {id:2,cat:"A. Cash Costs",sub:"1. Land Preparation",desc:"Farm Brushing / Slashing",qty:"6",unit:"Manday",price:"400",notes:""},
-      {id:3,cat:"A. Cash Costs",sub:"4. Fertilizer & Pest Management",desc:"Ammonium Phosphate (16-20-0)",qty:"2",unit:"Bag",price:"1489",notes:""},
-      {id:4,cat:"A. Cash Costs",sub:"4. Fertilizer & Pest Management",desc:"Muriate of Potash (0-0-60)",qty:"2",unit:"Bag",price:"1850",notes:""},
-      {id:5,cat:"A. Cash Costs",sub:"4. Fertilizer & Pest Management",desc:"Boron Foliar",qty:"1",unit:"Bottle",price:"450",notes:""},
-      {id:6,cat:"A. Cash Costs",sub:"4. Fertilizer & Pest Management",desc:"Pest/Disease Control",qty:"1",unit:"Lot",price:"1200",notes:"CRL / scale insects"},
-      {id:7,cat:"A. Cash Costs",sub:"4. Fertilizer & Pest Management",desc:"Fertilizer Application Labor",qty:"4",unit:"Manday",price:"400",notes:""},
-      {id:8,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Climbing / Harvesting Labor",qty:"12",unit:"Manday",price:"400",notes:"3 rounds/yr"},
-      {id:9,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Husking & Splitting Labor",qty:"8",unit:"Manday",price:"400",notes:""},
-      {id:10,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Copra Drying (Kiln / Sun)",qty:"1",unit:"Per crop",price:"3500",notes:""},
-      {id:11,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Sacks & Twine",qty:"50",unit:"Sack",price:"15",notes:""},
-      {id:12,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Hauling / Transport to Mill",qty:"1",unit:"Trip",price:"2000",notes:""},
+      {id:1,cat:"A. Cash Costs",sub:"1. Animal & Housing",desc:"Purchased Animal (Weaner/Stocker)",qty:"5",unit:"Head",price:"18000",notes:"150 kg initial wt."},
+      {id:2,cat:"A. Cash Costs",sub:"1. Animal & Housing",desc:"Shelter/Corral Repair",qty:"1",unit:"Lot",price:"5000",notes:""},
+      {id:3,cat:"A. Cash Costs",sub:"2. Feeds",desc:"Concentrate Feed / Copra Meal",qty:"24",unit:"Bag",price:"900",notes:"50 kg/bag"},
+      {id:4,cat:"A. Cash Costs",sub:"2. Feeds",desc:"Mineral Block / Salt Lick",qty:"12",unit:"Block",price:"180",notes:"1/head/mo"},
+      {id:5,cat:"A. Cash Costs",sub:"2. Feeds",desc:"Pasture Improvement (Napier/Para grass)",qty:"1",unit:"Lot",price:"3000",notes:""},
+      {id:6,cat:"A. Cash Costs",sub:"3. Veterinary",desc:"Anti-helminthics (Deworming)",qty:"5",unit:"Head",price:"250",notes:"Quarterly"},
+      {id:7,cat:"A. Cash Costs",sub:"3. Veterinary",desc:"FMD / HS / BQ Vaccines",qty:"5",unit:"Head",price:"150",notes:"Compulsory"},
+      {id:8,cat:"A. Cash Costs",sub:"3. Veterinary",desc:"Vitamins & Nutritional Support",qty:"2",unit:"Bottle",price:"450",notes:""},
+      {id:9,cat:"A. Cash Costs",sub:"3. Veterinary",desc:"Veterinary Services (misc.)",qty:"1",unit:"Lot",price:"2000",notes:"Contingency"},
+      {id:10,cat:"A. Cash Costs",sub:"4. Labor & Overhead",desc:"Labor – Herding, Feeding, Cleaning",qty:"240",unit:"Manday",price:"200",notes:"Part-time"},
+      {id:11,cat:"A. Cash Costs",sub:"4. Labor & Overhead",desc:"Water Supply (pumping / hauling)",qty:"1",unit:"Per year",price:"2000",notes:""},
+      {id:12,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Transport to Slaughterhouse",qty:"1",unit:"Trip",price:"3500",notes:""},
+      {id:13,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Slaughter / Processing Fee",qty:"5",unit:"Head",price:"800",notes:""},
     ]
   }
 };
@@ -610,10 +702,12 @@ const TABS = [
 ========================================================== */
 let state = {
   tab: "assumptions",
-  tpl: "rice",
+  tpl: "palay",
   nextId: 200,
-  a: {...TEMPLATES.rice.a},
-  items: JSON.parse(JSON.stringify(TEMPLATES.rice.items))
+  nextCaId: 100,
+  a: {...TEMPLATES.palay.a},
+  items: JSON.parse(JSON.stringify(TEMPLATES.palay.items)),
+  customAssumptions: JSON.parse(JSON.stringify(TEMPLATES.palay.customAssumptions))
 };
 
 /* ==========================================================
@@ -637,7 +731,6 @@ function calc(yOvr, pOvr){
   const autoNC = gi * ((parseFloat(a.nonCashPct)||0)/100);
   const ncItems = state.items.filter(i=>i.cat==="B. Non-Cash Costs");
   const tNC = ncItems.reduce((s,i)=>s+(parseFloat(i.qty)||0)*(parseFloat(i.price)||0),0)+autoNC;
-  // Add interest & insurance to cash costs if set
   const interest = (tCash * (parseFloat(a.interestRate)||0)/100);
   const insurance = parseFloat(a.insuranceCost)||0;
   const tCashAdj = tCash + interest + insurance;
@@ -691,21 +784,35 @@ function render(){
   // Template buttons
   document.getElementById("tpl-buttons").innerHTML = Object.entries(TEMPLATES).map(([k,t])=>`
     <button class="tpl-btn ${state.tpl===k?"active":""}" data-tpl="${k}">
-      <i class="ti ${t.icon}" aria-hidden="true"></i>${t.label}
+      <i class="ti ${t.icon}"></i>${t.label}
     </button>`).join("");
 
   // Tabs nav
   document.getElementById("tabs-nav").innerHTML = TABS.map(t=>`
     <button class="tab-btn ${state.tab===t.id?"active":""}" data-tab="${t.id}">
-      <i class="ti ${t.icon}" aria-hidden="true"></i>${t.label}
+      <i class="ti ${t.icon}"></i>${t.label}
     </button>`).join("");
 
   let html = "";
 
   /* ── ASSUMPTIONS TAB ── */
   if(state.tab==="assumptions"){
+    // Build custom assumptions UI
+    const caRows = state.customAssumptions.map(ca=>`
+      <div class="custom-row" data-ca-id="${ca.id}">
+        <div class="field" style="margin:0">
+          <label>Label / Parameter Name</label>
+          <input class="ca-label" value="${esc(ca.label)}" placeholder="e.g. Moisture Content at Harvest (%)">
+        </div>
+        <div class="field" style="margin:0">
+          <label>Value / Data</label>
+          <input class="ca-value" value="${esc(ca.value)}" placeholder="e.g. 24%">
+        </div>
+        <button class="ca-del-btn" title="Remove"><i class="ti ti-trash"></i></button>
+      </div>`).join("");
+
     html = `
-    <div class="section-h"><i class="ti ti-id-badge" aria-hidden="true"></i>Identification & General Information</div>
+    <div class="section-h"><i class="ti ti-id-badge"></i>Identification & General Information</div>
     <div class="form-grid" style="margin-bottom:22px">
       <div class="field span2"><label>Commodity Name</label><input id="f-commodity" value="${esc(a.commodity)}" placeholder="e.g. Palay (Rice), Bangus, Broiler Chicken"></div>
       <div class="field"><label>Scale (number)</label><input type="number" id="f-scale" value="${esc(a.scale)}"><div class="field-hint">Number of ha/pond/heads/sq.m. for this analysis</div></div>
@@ -718,7 +825,7 @@ function render(){
       <div class="field"><label>Date Prepared</label><input type="date" id="f-date" value="${esc(a.date)}"></div>
     </div>
 
-    <div class="section-h"><i class="ti ti-plant" aria-hidden="true"></i>Production & Yield Assumptions</div>
+    <div class="section-h"><i class="ti ti-plant"></i>Production & Yield Assumptions</div>
     <div class="form-grid" style="margin-bottom:22px">
       <div class="field">
         <label>Average Yield per ${esc(a.scaleUnit)}</label>
@@ -743,7 +850,7 @@ function render(){
       <div class="field"><label>Number of Crops / Cycles per Year</label><input type="number" id="f-noOfCropsPerYear" value="${esc(a.noOfCropsPerYear)}"></div>
     </div>
 
-    <div class="section-h"><i class="ti ti-users" aria-hidden="true"></i>Labor & Financial Assumptions</div>
+    <div class="section-h"><i class="ti ti-users"></i>Labor & Financial Assumptions</div>
     <div class="form-grid" style="margin-bottom:22px">
       <div class="field"><label>Male Labor Rate (₱ / manday)</label><input type="number" id="f-laborRateMale" value="${esc(a.laborRateMale)}"></div>
       <div class="field"><label>Female Labor Rate (₱ / manday)</label><input type="number" id="f-laborRateFemale" value="${esc(a.laborRateFemale)}"></div>
@@ -753,7 +860,7 @@ function render(){
       <div class="field"><label>Non-Cash Labor (% of Gross Income)</label><input type="number" id="f-nonCashPct" value="${esc(a.nonCashPct)}"><div class="field-hint">Imputed value of farm/family/operator labor</div></div>
     </div>
 
-    <div class="section-h"><i class="ti ti-truck" aria-hidden="true"></i>Post-Harvest Assumptions <span class="badge-pill">Set to 100 / 0 if not applicable</span></div>
+    <div class="section-h"><i class="ti ti-truck"></i>Post-Harvest Assumptions <span class="badge-pill">Set to 100 / 0 if not applicable</span></div>
     <div class="form-grid" style="margin-bottom:22px">
       <div class="field"><label>Drying Recovery (%)</label><input type="number" id="f-dryingRecovery" value="${esc(a.dryingRecovery)}"><div class="field-hint">Palay: ~90%. Copra: ~38%. Set 100 if no drying.</div></div>
       <div class="field"><label>Milling / Processing Recovery (%)</label><input type="number" id="f-millingRecovery" value="${esc(a.millingRecovery)}"><div class="field-hint">Rice milling: ~65%. Corn: ~80%. Set 100 if N/A.</div></div>
@@ -762,14 +869,28 @@ function render(){
       <div class="field"><label>Processing / Milling Fee (₱/unit)</label><input type="number" id="f-millingFee" value="${esc(a.millingFee)}"></div>
     </div>
 
-    <div class="section-h"><i class="ti ti-arrows-exchange" aria-hidden="true"></i>Marketing Chain Markup Assumptions</div>
+    <div class="section-h"><i class="ti ti-arrows-exchange"></i>Marketing Chain Markup Assumptions</div>
     <div class="form-grid three" style="margin-bottom:22px">
       <div class="field"><label>Assembler / Consolidator Markup (%)</label><input type="number" id="f-assemblerMarkup" value="${esc(a.assemblerMarkup)}"></div>
       <div class="field"><label>Wholesaler Markup (%)</label><input type="number" id="f-wholesalerMarkup" value="${esc(a.wholesalerMarkup)}"></div>
       <div class="field"><label>Retailer Markup (%)</label><input type="number" id="f-retailerMarkup" value="${esc(a.retailerMarkup)}"></div>
     </div>
 
-    <div class="section-h"><i class="ti ti-notes" aria-hidden="true"></i>Remarks / Notes</div>
+    <!-- ── CUSTOM ASSUMPTIONS ── -->
+    <div class="custom-assumptions-box">
+      <div class="custom-assumptions-title">
+        <i class="ti ti-adjustments-alt"></i>
+        Additional / Commodity-Specific Assumptions
+        <span style="margin-left:auto;font-size:10px;font-weight:400;color:var(--purple);opacity:.8">These will appear in all output documents (Excel, PDF)</span>
+      </div>
+      <div id="ca-rows">${caRows}</div>
+      <button class="ca-add-btn" id="ca-add-btn">
+        <i class="ti ti-plus"></i> Add custom assumption / parameter
+      </button>
+      <div class="ca-hint">Use this section for commodity-specific technical data that doesn't fit standard fields — e.g. FCR, survival rate, moisture content, stocking density, tapping system, etc.</div>
+    </div>
+
+    <div class="section-h"><i class="ti ti-notes"></i>Remarks / Notes</div>
     <div class="form-grid full" style="margin-bottom:8px">
       <div class="field"><label>Additional notes, data sources, or qualifications</label><textarea id="f-remarks" placeholder="e.g. Prices based on BAS/AMAD market monitoring as of Q1 2026. Data validated with LGU Agriculturist…">${esc(a.remarks)}</textarea></div>
     </div>
@@ -777,7 +898,7 @@ function render(){
     <div class="hint-box">
       <strong>Legend:</strong>&nbsp; PW = Pakyaw (contract/package) &nbsp;·&nbsp; DAS = Days after sowing &nbsp;·&nbsp; FPA = Fertilizer & Pesticide Authority
       &nbsp;·&nbsp; MC = Moisture content &nbsp;·&nbsp; BCP = Breakdown of consumer's peso &nbsp;·&nbsp; HVC = High value crops
-      &nbsp;·&nbsp; PCIC = Philippine Crop Insurance Corporation &nbsp;·&nbsp; GIFT = Genetically Improved Farmed Tilapia
+      &nbsp;·&nbsp; PCIC = Philippine Crop Insurance Corporation &nbsp;·&nbsp; FCR = Feed Conversion Ratio &nbsp;·&nbsp; DRC = Dry Rubber Content &nbsp;·&nbsp; ADG = Average Daily Gain
     </div>`;
   }
 
@@ -798,11 +919,11 @@ function render(){
         <td style="width:100px"><input type="number" class="item-price" value="${esc(item.price)}" style="text-align:right"></td>
         <td style="text-align:right;font-weight:600;padding-right:12px;white-space:nowrap">₱${ni(amt)}</td>
         <td style="min-width:120px"><input class="item-notes" value="${esc(item.notes)}" style="color:var(--muted)"></td>
-        <td style="width:36px"><button class="row-del" title="Remove"><i class="ti ti-trash" aria-hidden="true"></i></button></td>
+        <td style="width:36px"><button class="row-del" title="Remove"><i class="ti ti-trash"></i></button></td>
       </tr>`;
     });
     html = `
-    <button class="add-row-btn" id="add-item"><i class="ti ti-plus" aria-hidden="true"></i> Add cost item</button>
+    <button class="add-row-btn" id="add-item"><i class="ti ti-plus"></i> Add cost item</button>
     <div class="table-wrap">
     <table>
       <thead><tr>
@@ -855,13 +976,22 @@ function render(){
     const ncSh = c.tCost>0 ? c.autoNC/c.tCost : 0;
     const finSh = c.tCost>0 ? (c.interest+c.insurance)/c.tCost : 0;
 
+    // Custom assumptions display
+    const caDisplay = state.customAssumptions.length ? `
+    <div class="custom-assumption-display">
+      <div class="card-h" style="color:var(--purple);margin-bottom:10px"><i class="ti ti-adjustments-alt" style="margin-right:6px"></i>Commodity-Specific Assumptions</div>
+      ${state.customAssumptions.map(ca=>`
+        <div class="ca-display-row"><span class="lbl">${esc(ca.label)}</span><span class="val">${esc(ca.value)}</span></div>`).join("")}
+    </div>` : "";
+
     html = `
     <div class="profit-banner ${isProfit?"profit":"loss"}">
-      <i class="ti ${isProfit?"ti-circle-check":"ti-alert-triangle"}" aria-hidden="true"></i>
+      <i class="ti ${isProfit?"ti-circle-check":"ti-alert-triangle"}"></i>
       <span>${esc(a.commodity)} &nbsp;·&nbsp; ${esc(a.scale)} ${esc(a.scaleUnit)} &nbsp;·&nbsp; ${esc(a.period)}
       &nbsp;·&nbsp; <strong>${isProfit?"Profitable":"Loss-making"}</strong> at current assumptions</span>
     </div>
-    <div class="section-h"><i class="ti ti-calculator" aria-hidden="true"></i>Income Statement</div>
+    ${caDisplay}
+    <div class="section-h"><i class="ti ti-calculator"></i>Income Statement</div>
     <div class="card-grid" style="margin-bottom:22px">
       <div class="card">
         <div class="card-h">Revenue & Net Income</div>
@@ -883,14 +1013,14 @@ function render(){
         <div class="kv-row"><span class="kv-label">${l}</span><span class="kv-value">${v}</span></div>`).join("")}
       </div>
     </div>
-    <div class="section-h"><i class="ti ti-target" aria-hidden="true"></i>Break-Even Analysis</div>
+    <div class="section-h"><i class="ti ti-target"></i>Break-Even Analysis</div>
     <div class="be-grid" style="margin-bottom:22px">
       <div class="be-card"><div class="lbl">Break-even price (₱ / ${esc(a.yieldUnit)})</div><div class="val">₱${num(c.beP)}</div><div class="hint">Min price/unit to recover all costs</div></div>
       <div class="be-card"><div class="lbl">Break-even yield (${esc(a.yieldUnit)})</div><div class="val">${ni(c.beY)}</div><div class="hint">Min yield to cover total cost at current price</div></div>
       <div class="be-card"><div class="lbl">Safety margin — yield</div><div class="val ${c.safetyY>=0?"positive":"negative"}">${ni(c.safetyY)} ${esc(a.yieldUnit)}</div><div class="hint">Actual minus break-even yield</div></div>
       <div class="be-card"><div class="lbl">Safety margin — price</div><div class="val ${c.safetyP>=0?"positive":"negative"}">₱${num(c.safetyP)}</div><div class="hint">Farmgate minus break-even price</div></div>
     </div>
-    <div class="section-h"><i class="ti ti-chart-donut" aria-hidden="true"></i>Cost Structure Breakdown</div>
+    <div class="section-h"><i class="ti ti-chart-donut"></i>Cost Structure Breakdown</div>
     <div class="table-wrap">
     <table>
       <thead><tr><th>Sub-category</th><th class="text-right">Amount (₱)</th><th class="text-right">% of total</th><th style="width:160px">Share</th></tr></thead>
@@ -927,7 +1057,7 @@ function render(){
         <td class="text-right">${ni(ny*(parseFloat(a.scale)||1))} ${esc(a.yieldUnit)}</td>
         <td class="text-right">₱${ni(cc.gi)}</td>
         <td class="text-right">₱${ni(cc.tCost)}</td>
-        <td class="text-right ${cc.netInc>=0?"":""}">₱${ni(cc.netInc)}</td>
+        <td class="text-right">₱${ni(cc.netInc)}</td>
         <td class="text-right">${pct(cc.roi)}</td>
       </tr>`;
     }).join("");
@@ -944,10 +1074,7 @@ function render(){
         <td class="text-right">${pct(cc.roi)}</td>
       </tr>`;
     }).join("");
-
-    // Cost sensitivity
     const sensCRows = steps.map(d=>{
-      // simulate cost increase by scaling item prices
       const adjItems = state.items.map(i=>({...i,price:String((parseFloat(i.price)||0)*(1+d/100))}));
       const origItems = state.items;
       state.items = adjItems;
@@ -970,19 +1097,19 @@ function render(){
       <span class="badge badge-red"><i class="ti ti-circle-x" style="font-size:11px"></i>&nbsp;Red = loss</span>
       <span class="badge badge-gold"><i class="ti ti-arrow-right" style="font-size:11px"></i>&nbsp;Gold = base scenario</span>
     </div>
-    <div class="section-h"><i class="ti ti-trending-up" aria-hidden="true"></i>Yield Sensitivity — price held at ₱${num(baseP)} / ${esc(a.yieldUnit)}</div>
+    <div class="section-h"><i class="ti ti-trending-up"></i>Yield Sensitivity — price held at ₱${num(baseP)} / ${esc(a.yieldUnit)}</div>
     <div class="table-wrap" style="margin-bottom:26px">
     <table>
       <thead><tr><th>Scenario</th><th class="text-right">Total yield</th><th class="text-right">Gross income</th><th class="text-right">Total cost</th><th class="text-right">Net income</th><th class="text-right">ROI</th></tr></thead>
       <tbody>${sensYRows}</tbody>
     </table></div>
-    <div class="section-h"><i class="ti ti-coin" aria-hidden="true"></i>Price Sensitivity — yield held at ${ni(baseY*(parseFloat(a.scale)||1))} ${esc(a.yieldUnit)}</div>
+    <div class="section-h"><i class="ti ti-coin"></i>Price Sensitivity — yield held at ${ni(baseY*(parseFloat(a.scale)||1))} ${esc(a.yieldUnit)}</div>
     <div class="table-wrap" style="margin-bottom:26px">
     <table>
       <thead><tr><th>Scenario</th><th class="text-right">Farmgate price</th><th class="text-right">Gross income</th><th class="text-right">Total cost</th><th class="text-right">Net income</th><th class="text-right">ROI</th></tr></thead>
       <tbody>${sensPRows}</tbody>
     </table></div>
-    <div class="section-h"><i class="ti ti-chart-line" aria-hidden="true"></i>Cost Sensitivity — yield &amp; price at base level</div>
+    <div class="section-h"><i class="ti ti-chart-line"></i>Cost Sensitivity — yield &amp; price at base level</div>
     <div class="table-wrap">
     <table>
       <thead><tr><th>Scenario</th><th class="text-right">Total cost</th><th class="text-right">Gross income</th><th class="text-right">Net income</th><th class="text-right">ROI</th><th class="text-right">Break-even price</th></tr></thead>
@@ -1003,14 +1130,14 @@ function render(){
       return `<div style="display:flex;align-items:center;flex-shrink:0">
         <div class="vc-node">
           <div class="vc-box">
-            <i class="ti ${ac.icon}" aria-hidden="true" style="font-size:20px;color:var(--green);display:block;margin-bottom:6px"></i>
+            <i class="ti ${ac.icon}" style="font-size:20px;color:var(--green);display:block;margin-bottom:6px"></i>
             <div class="vc-actor">${ac.name}</div>
             <div class="vc-price">₱${num(ac.sell)}</div>
             <div class="vc-margin">+₱${num(ac.margin)}/unit</div>
           </div>
           <div class="vc-share">${sh}% of consumer ₱</div>
         </div>
-        ${i<vcActors.length-1?`<div class="vc-arrow"><i class="ti ti-arrow-right" aria-hidden="true"></i></div>`:""}
+        ${i<vcActors.length-1?`<div class="vc-arrow"><i class="ti ti-arrow-right"></i></div>`:""}
       </div>`;
     }).join("");
     const vcRows = vcActors.map((ac,i)=>{
@@ -1024,16 +1151,16 @@ function render(){
       </tr>`;
     }).join("");
     html = `
-    <div class="section-h"><i class="ti ti-network" aria-hidden="true"></i>Price Flow by Market Actor</div>
+    <div class="section-h"><i class="ti ti-network"></i>Price Flow by Market Actor</div>
     <div class="vc-flow">${vcFlow}</div>
-    <div class="section-h"><i class="ti ti-percentage" aria-hidden="true"></i>Marketing Margins &amp; Breakdown of Consumer's Peso (BCP)</div>
+    <div class="section-h"><i class="ti ti-percentage"></i>Marketing Margins &amp; Breakdown of Consumer's Peso (BCP)</div>
     <div class="table-wrap" style="margin-bottom:22px">
     <table>
       <thead><tr><th>Actor</th><th class="text-right">Buying price (₱)</th><th class="text-right">Selling price (₱)</th><th class="text-right">Margin (₱)</th><th class="text-right">BCP % share</th></tr></thead>
       <tbody>${vcRows}</tbody>
       <tfoot><tr><td>Consumer price (retail)</td><td></td><td class="text-right">₱${num(c.retP)}</td><td></td><td class="text-right">100.00%</td></tr></tfoot>
     </table></div>
-    <div class="section-h"><i class="ti ti-arrows-down-up" aria-hidden="true"></i>Post-Harvest Processing Summary</div>
+    <div class="section-h"><i class="ti ti-arrows-down-up"></i>Post-Harvest Processing Summary</div>
     <div class="summary-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:14px">
       <div class="metric-card"><div class="metric-label">Fresh / live yield</div><div class="metric-value" style="font-size:18px">${ni(c.totalY)} ${esc(a.yieldUnit)}</div><div class="metric-sub">At farm gate</div></div>
       <div class="metric-card"><div class="metric-label">After drying</div><div class="metric-value" style="font-size:18px">${ni(c.dryY)} ${esc(a.yieldUnit)}</div><div class="metric-sub">${esc(a.dryingRecovery)}% recovery</div></div>
@@ -1067,7 +1194,9 @@ function attachEvents(){
     state.tpl = b.dataset.tpl;
     state.a = {...t.a};
     state.items = JSON.parse(JSON.stringify(t.items));
+    state.customAssumptions = JSON.parse(JSON.stringify(t.customAssumptions));
     state.nextId = 300;
+    state.nextCaId = 200;
     render();
   }));
 
@@ -1075,7 +1204,7 @@ function attachEvents(){
     state.tab = b.dataset.tab; render();
   }));
 
-  // All assumption fields
+  // All standard assumption fields
   const fields = ["commodity","scale","scaleUnit","period","region","analyst","designation","office","date",
     "averageYield","yieldUnit","farmgatePrice","croppingSystem","irrigationSource","soilType","slope",
     "seedVariety","seedingMethod","cropDuration","noOfCropsPerYear","laborRateMale","laborRateFemale",
@@ -1085,6 +1214,35 @@ function attachEvents(){
   fields.forEach(k=>{
     const el = document.getElementById("f-"+k);
     if(el) el.addEventListener("input",()=>{ state.a[k]=el.value; render(); });
+  });
+
+  // Custom assumption rows
+  document.querySelectorAll("#ca-rows .custom-row").forEach(row=>{
+    const id = +row.dataset.caId;
+    const lblEl = row.querySelector(".ca-label");
+    const valEl = row.querySelector(".ca-value");
+    const delEl = row.querySelector(".ca-del-btn");
+    if(lblEl) lblEl.addEventListener("input",()=>{
+      state.customAssumptions = state.customAssumptions.map(ca=>ca.id===id?{...ca,label:lblEl.value}:ca);
+    });
+    if(valEl) valEl.addEventListener("input",()=>{
+      state.customAssumptions = state.customAssumptions.map(ca=>ca.id===id?{...ca,value:valEl.value}:ca);
+    });
+    if(delEl) delEl.addEventListener("click",()=>{
+      state.customAssumptions = state.customAssumptions.filter(ca=>ca.id!==id);
+      render();
+    });
+  });
+
+  document.getElementById("ca-add-btn")?.addEventListener("click",()=>{
+    state.customAssumptions = [...state.customAssumptions,{id:state.nextCaId++,label:"",value:""}];
+    render();
+    // Focus on the newly added label input
+    const rows = document.querySelectorAll("#ca-rows .custom-row");
+    if(rows.length>0){
+      const lastRow = rows[rows.length-1];
+      lastRow.querySelector(".ca-label")?.focus();
+    }
   });
 
   // Cost item rows
@@ -1113,7 +1271,7 @@ function attachEvents(){
 }
 
 /* ==========================================================
-   EXCEL EXPORT
+   EXCEL EXPORT — with custom assumptions sheet
 ========================================================== */
 function exportExcel(){
   if(!window.XLSX){ alert("SheetJS loading, please retry."); return; }
@@ -1128,7 +1286,7 @@ function exportExcel(){
     ["Commodity:",a.commodity,"","Production Period:",a.period,""],
     ["Scale:",a.scale+" "+a.scaleUnit,"","Region:",a.region,""],
     ["Analyst:",a.analyst,"","Designation:",a.designation,""],
-    ["Office:",a.office,"","Date Prepared:",a.date,""],
+    ["Office:",a.office||"—","","Date Prepared:",a.date||"—",""],
     ["Cropping System:",a.croppingSystem,"","Irrigation:",a.irrigationSource,""],
     ["Seed/Breed/Variety:",a.seedVariety,"","Seeding Method:",a.seedingMethod,""],
     ["Crop Duration:",a.cropDuration,"","No. of Crops/Year:",a.noOfCropsPerYear,""],
@@ -1137,6 +1295,12 @@ function exportExcel(){
     ["Land Cost:",a.landCost+" ₱/"+a.scaleUnit+"/yr","","Interest Rate:",a.interestRate+"%",""],
     ["Crop Insurance:",a.insuranceCost+" ₱/crop","","Non-Cash Labor:",a.nonCashPct+"% of GI",""],
     [],
+    // Custom assumptions inline
+    ...(state.customAssumptions.length>0?[
+      ["COMMODITY-SPECIFIC ASSUMPTIONS","","","","",""],
+      ...state.customAssumptions.map(ca=>[ca.label||"—",ca.value||"—","","","",""]),
+      []
+    ]:[]),
     ["PRODUCTION COSTS","","","","",""],
     ["Description","Quantity","Unit","Unit Price (₱)","Amount (₱)","Notes/Basis"],
   ];
@@ -1180,7 +1344,21 @@ function exportExcel(){
   ws["!cols"] = [{wch:46},{wch:13},{wch:12},{wch:16},{wch:16},{wch:38}];
   XLSX.utils.book_append_sheet(wb,"CRA",ws);
 
-  // ─ Sheet 2: Sensitivity ─
+  // ─ Sheet 2: Custom Assumptions (if any) ─
+  if(state.customAssumptions.length>0){
+    const caRows = [
+      ["COMMODITY-SPECIFIC ASSUMPTIONS — "+a.commodity,""],
+      ["Generated for: "+a.period+" · "+a.region,""],
+      [],
+      ["Parameter / Label","Value / Data"],
+      ...state.customAssumptions.map(ca=>[ca.label||"—",ca.value||"—"]),
+    ];
+    const wsCa = XLSX.utils.aoa_to_sheet(caRows);
+    wsCa["!cols"] = [{wch:48},{wch:32}];
+    XLSX.utils.book_append_sheet(wb,"Commodity Assumptions",wsCa);
+  }
+
+  // ─ Sheet 3: Sensitivity ─
   const sensRows = [
     ["SENSITIVITY ANALYSIS","","","","",""],
     [],
@@ -1202,7 +1380,7 @@ function exportExcel(){
   ws2["!cols"] = [{wch:28},{wch:18},{wch:18},{wch:18},{wch:18},{wch:12}];
   XLSX.utils.book_append_sheet(wb,"Sensitivity",ws2);
 
-  // ─ Sheet 3: Value Chain ─
+  // ─ Sheet 4: Value Chain ─
   const c2 = calc();
   const vcA = [
     {name:"Farmer",    buy:null,   sell:c2.p,    margin:c2.p},
@@ -1211,7 +1389,7 @@ function exportExcel(){
     {name:"Retailer",  buy:c2.whlP,sell:c2.retP, margin:c2.retP-c2.whlP},
   ];
   const vcRows2 = [["VALUE CHAIN ANALYSIS","","","",""],["Actor","Buying Price (₱)","Selling Price (₱)","Margin (₱)","BCP % Share"]];
-  vcA.forEach((ac,i)=>{ vcRows2.push([ac.name,i>0?+(vcA[i-1]??(ac.sell-ac.margin)).sell.toFixed(2):"—",+ac.sell.toFixed(2),+ac.margin.toFixed(2),c2.retP>0?+((ac.margin/c2.retP)*100).toFixed(2)+"%":"—"]); });
+  vcA.forEach((ac,i)=>{ vcRows2.push([ac.name,i>0?+(vcA[i].buy||0).toFixed(2):"—",+ac.sell.toFixed(2),+ac.margin.toFixed(2),c2.retP>0?+((ac.margin/c2.retP)*100).toFixed(2)+"%":"—"]); });
   vcRows2.push(["Consumer Price","",+c2.retP.toFixed(2),"","100.00%"]);
   const ws3 = XLSX.utils.aoa_to_sheet(vcRows2);
   ws3["!cols"] = [{wch:28},{wch:20},{wch:20},{wch:16},{wch:14}];
@@ -1221,7 +1399,7 @@ function exportExcel(){
 }
 
 /* ==========================================================
-   PDF EXPORT  (jsPDF + autoTable)
+   PDF EXPORT — with custom assumptions section
 ========================================================== */
 function exportPDF(){
   const { jsPDF } = window.jspdf;
@@ -1235,7 +1413,6 @@ function exportPDF(){
   const margin = 14;
   let y = margin;
 
-  // ─ helpers ─
   const green = [27,90,35];
   const darkGreen = [21,69,27];
   const lightGreen = [232,245,233];
@@ -1243,6 +1420,9 @@ function exportPDF(){
   const gray = [240,240,238];
   const muted = [114,114,106];
   const red = [183,28,28];
+  const purple = [106,27,154];
+  const purpleBg = [243,229,245];
+
   const pageNum = ()=>{
     const total = doc.internal.getNumberOfPages();
     for(let i=1;i<=total;i++){
@@ -1268,14 +1448,14 @@ function exportPDF(){
     y = 22;
   };
 
-  const sectionHeader = (label)=>{
+  const sectionHeader = (label, color=green, bgColor=lightGreen)=>{
     checkPage(12);
-    doc.setFillColor(...lightGreen);
+    doc.setFillColor(...bgColor);
     doc.rect(margin,y,pageW-margin*2,6.5,"F");
-    doc.setDrawColor(...green); doc.setLineWidth(0.4);
+    doc.setDrawColor(...color); doc.setLineWidth(0.4);
     doc.line(margin,y,margin,y+6.5);
     doc.setFontSize(8); doc.setFont("helvetica","bold");
-    doc.setTextColor(...darkGreen);
+    doc.setTextColor(...color);
     doc.text(label.toUpperCase(),margin+3,y+4.4);
     y += 9;
   };
@@ -1288,6 +1468,18 @@ function exportPDF(){
     doc.setFont("helvetica",bold?"bold":"normal"); doc.setTextColor(44,44,36);
     doc.text(String(value),pageW-margin-2,y,{align:"right"});
     doc.setDrawColor(232,232,226); doc.setLineWidth(0.2);
+    doc.line(margin,y+1.2,pageW-margin,y+1.2);
+    y += 5.8;
+  };
+
+  const kvRowPurple = (label,value)=>{
+    checkPage(6);
+    doc.setFontSize(8.5);
+    doc.setFont("helvetica","normal"); doc.setTextColor(...purple);
+    doc.text(label,margin+2,y);
+    doc.setFont("helvetica","bold"); doc.setTextColor(44,44,36);
+    doc.text(String(value),pageW-margin-2,y,{align:"right"});
+    doc.setDrawColor(206,147,216); doc.setLineWidth(0.2);
     doc.line(margin,y+1.2,pageW-margin,y+1.2);
     y += 5.8;
   };
@@ -1330,6 +1522,16 @@ function exportPDF(){
   idPairs.forEach(([l,v])=>kvRow(l,v));
   y += 4;
 
+  // ─ CUSTOM ASSUMPTIONS (if any) ─
+  if(state.customAssumptions.length>0){
+    checkPage(20);
+    sectionHeader("Commodity-Specific Assumptions", purple, purpleBg);
+    state.customAssumptions.forEach(ca=>{
+      kvRowPurple(ca.label||"—", ca.value||"—");
+    });
+    y += 4;
+  }
+
   // ─ INCOME STATEMENT ─
   checkPage(40);
   sectionHeader("Income Statement & Profitability Analysis");
@@ -1343,7 +1545,6 @@ function exportPDF(){
   kvRow("Non-Cash Costs (B – "+a.nonCashPct+"% of GI)", "₱"+ni(c.tNC));
   kvRow("Total Production Cost", "₱"+ni(c.tCost), true);
 
-  // Net income highlight
   checkPage(12);
   doc.setFillColor(...(isProfit?lightGreen:[255,235,238]));
   doc.rect(margin,y,pageW-margin*2,9,"F");
@@ -1389,7 +1590,7 @@ function exportPDF(){
     headStyles:{fillColor:green,textColor:255,fontStyle:"bold",fontSize:7.5},
     footStyles:{fillColor:lightGreen,textColor:green},
     columnStyles:{0:{cellWidth:60},1:{cellWidth:12,halign:"right"},2:{cellWidth:14},3:{cellWidth:22,halign:"right"},4:{cellWidth:22,halign:"right"},5:{cellWidth:40}},
-    didDrawPage:(data)=>{ drawPageHeader(); },
+    didDrawPage:()=>{ drawPageHeader(); },
   });
   y = doc.lastAutoTable.finalY + 6;
 
@@ -1464,7 +1665,6 @@ function exportPDF(){
   });
   y = doc.lastAutoTable.finalY + 6;
 
-  // post-harvest
   kvRow("Drying recovery", a.dryingRecovery+"%");
   kvRow("After drying yield", ni(c.dryY)+" "+a.yieldUnit);
   kvRow("Milling/processing recovery", a.millingRecovery+"%");
@@ -1499,7 +1699,6 @@ function exportPDF(){
   });
   y += 36;
 
-  // footer line
   doc.setDrawColor(...gray); doc.setLineWidth(0.3);
   doc.line(margin,y,pageW-margin,y);
   y+=4;
