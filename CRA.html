@@ -1377,7 +1377,7 @@ function renderVC(c,yu){
 ============================================================ */
 function attachEvents(){
   // Templates
-  document.querySelectorAll(".tpl-btn").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".tpl-btn").forEach(b=>{ b.onclick=()=>{
     const t=TEMPLATES[b.dataset.tpl];if(!t)return;
     S.tpl=b.dataset.tpl;
     S.groups=deepCopy(t.groups);
@@ -1386,88 +1386,99 @@ function attachEvents(){
     S.items=deepCopy(t.items);
     S.nextId=500;S.nextCaId=300;
     render();
-  }));
+  };});
 
   // Tabs
-  document.querySelectorAll(".t-btn").forEach(b=>b.addEventListener("click",()=>{S.tab=b.dataset.tab;render();}));
+  document.querySelectorAll(".t-btn").forEach(b=>{ b.onclick=()=>{S.tab=b.dataset.tab;render();}; });
 
-  // Assumption inputs (value)
+  // Assumption value inputs
   document.querySelectorAll(".asmp-val-inp").forEach(el=>{
-    el.addEventListener("input",()=>{
+    el.oninput=()=>{
       const gk=el.dataset.gk,fi=+el.dataset.fi;
       S.groups[gk][fi].value=el.value;
       render();
-    });
+    };
   });
   // Assumption label inputs
   document.querySelectorAll(".asmp-lbl-inp").forEach(el=>{
-    el.addEventListener("input",()=>{
+    el.oninput=()=>{
       const gk=el.dataset.gk,fi=+el.dataset.fi;
       S.groups[gk][fi].label=el.value;
-    });
+    };
   });
   // Unit inputs
   document.querySelectorAll(".asmp-unit-inp").forEach(el=>{
-    el.addEventListener("input",()=>{
+    el.oninput=()=>{
       const gk=el.dataset.gk,fi=+el.dataset.fi;
       S.groups[gk][fi].unit=el.value;
-    });
+    };
   });
   // Delete assumption
-  document.querySelectorAll(".asmp-del:not(.locked)").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".asmp-del:not(.locked)").forEach(b=>{ b.onclick=()=>{
     const gk=b.dataset.gk,fi=+b.dataset.fi;
     S.groups[gk].splice(fi,1);render();
-  }));
+  };});
   // Add assumption
-  document.querySelectorAll(".asmp-add-btn").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".asmp-add-btn").forEach(b=>{ b.onclick=()=>{
     const gk=b.dataset.gk;
     S.groups[gk].push({key:"custom_"+Date.now(),label:"New Assumption",type:"text",value:""});
     render();
-    // focus new input
     const rows=document.querySelectorAll(`#grp-${gk} .asmp-val-inp`);
     if(rows.length) rows[rows.length-1].focus();
-  }));
+  };});
 
   // Custom assumptions
   document.querySelectorAll("#ca-rows .ca-lbl").forEach(el=>{
     const id=+el.closest("[data-ca-id]").dataset.caId;
-    el.addEventListener("input",()=>{S.custom=S.custom.map(ca=>ca.id===id?{...ca,label:el.value}:ca);});
+    el.oninput=()=>{S.custom=S.custom.map(ca=>ca.id===id?{...ca,label:el.value}:ca);};
   });
   document.querySelectorAll("#ca-rows .ca-val").forEach(el=>{
     const id=+el.closest("[data-ca-id]").dataset.caId;
-    el.addEventListener("input",()=>{S.custom=S.custom.map(ca=>ca.id===id?{...ca,value:el.value}:ca);});
+    el.oninput=()=>{S.custom=S.custom.map(ca=>ca.id===id?{...ca,value:el.value}:ca);};
   });
-  document.querySelectorAll("#ca-rows .ca-del").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll("#ca-rows .ca-del").forEach(b=>{ b.onclick=()=>{
     const id=+b.closest("[data-ca-id]").dataset.caId;
     S.custom=S.custom.filter(ca=>ca.id!==id);render();
-  }));
-  document.getElementById("ca-add-btn")?.addEventListener("click",()=>{
+  };});
+  const caAddBtn=document.getElementById("ca-add-btn");
+  if(caAddBtn) caAddBtn.onclick=()=>{
     S.custom=[...S.custom,{id:S.nextCaId++,label:"",value:""}];
     render();
     const rows=document.querySelectorAll("#ca-rows .ca-lbl");
     if(rows.length) rows[rows.length-1].focus();
-  });
+  };
 
   // Remarks
-  document.getElementById("f-remarks")?.addEventListener("input",e=>{S.remarks=e.target.value;});
+  const remarksEl=document.getElementById("f-remarks");
+  if(remarksEl) remarksEl.oninput=e=>{S.remarks=e.target.value;};
 
-  // Cost items
+  // Cost items — use .oninput/.onchange/.onclick (not addEventListener) to avoid stacking on re-render
   document.querySelectorAll("#cost-tbody tr[data-id]").forEach(row=>{
     const id=+row.dataset.id;
-    const upd=(field,sel,ev)=>{const el=row.querySelector(sel);if(el)el.addEventListener(ev||"input",()=>{S.items=S.items.map(i=>i.id===id?{...i,[field]:el.value}:i);render();});};
-    upd("cat",".item-cat","change");upd("sub",".item-sub","change");
+    const upd=(field,sel,useChange)=>{
+      const el=row.querySelector(sel);
+      if(!el) return;
+      const handler=()=>{S.items=S.items.map(i=>i.id===id?{...i,[field]:el.value}:i);render();};
+      if(useChange) el.onchange=handler; else el.oninput=handler;
+    };
+    upd("cat",".item-cat",true);upd("sub",".item-sub",true);
     upd("desc",".item-desc");upd("qty",".item-qty");upd("unit",".item-unit");
     upd("price",".item-price");upd("notes",".item-notes");
-    row.querySelector(".row-del")?.addEventListener("click",()=>{S.items=S.items.filter(i=>i.id!==id);render();});
+    const del=row.querySelector(".row-del");
+    if(del) del.onclick=()=>{S.items=S.items.filter(i=>i.id!==id);render();};
   });
-  document.getElementById("add-item")?.addEventListener("click",()=>{
-    S.items=[...S.items,{id:S.nextId++,cat:"A. Cash Costs",sub:"6. Other Cash Costs",desc:"",qty:"1",unit:"Unit",price:"0",notes:""}];
-    render();
-  });
+  // add-item is inside tab content so bind directly each render
+  const addItemBtn = document.getElementById("add-item");
+  if(addItemBtn){
+    addItemBtn.onclick = ()=>{
+      S.items=[...S.items,{id:S.nextId++,cat:"A. Cash Costs",sub:"6. Other Cash Costs",desc:"",qty:"1",unit:"Unit",price:"0",notes:""}];
+      render();
+      // scroll to bottom of table so user sees new row
+      const tbody = document.getElementById("cost-tbody");
+      if(tbody){ const rows=tbody.querySelectorAll("tr[data-id]"); if(rows.length){rows[rows.length-1].scrollIntoView({behavior:"smooth",block:"center"}); const inp=rows[rows.length-1].querySelector(".item-desc"); if(inp) inp.focus();} }
+    };
+  }
 
-  document.getElementById("btn-excel")?.addEventListener("click",exportExcel);
-  document.getElementById("btn-pdf")?.addEventListener("click",exportPDF);
-  document.getElementById("btn-print")?.addEventListener("click",()=>window.print());
 }
 
 /* helpers to flatten assumptions for output */
