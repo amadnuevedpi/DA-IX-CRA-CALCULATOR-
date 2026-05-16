@@ -206,6 +206,8 @@ body{font-family:var(--fb);font-size:14px;color:var(--text);background:var(--ow)
 .vc-share{font-size:10px;color:var(--muted);margin-top:4px}
 .vc-arrow{color:var(--gray3);padding:0 8px;font-size:18px;flex-shrink:0}
 
+.text-right{text-align:right!important}
+
 /* BADGES */
 .badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600}
 .bg-green{background:var(--g3);color:var(--g2)}
@@ -222,7 +224,21 @@ body{font-family:var(--fb);font-size:14px;color:var(--text);background:var(--ow)
 .ca-dr .lbl{color:var(--muted)}.ca-dr .val{font-weight:500}
 
 /* FOOTER */
-.page-footer{text-align:center;padding:18px 22px;font-size:11px;color:var(--muted);border-top:1px solid var(--gray2);margin-top:24px}
+.page-footer{padding:0;font-size:11px;color:var(--muted);border-top:1px solid var(--gray2);margin-top:24px}
+.footer-top{background:var(--g);color:rgba(255,255,255,.85);padding:22px 28px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px}
+.footer-col{border-right:1px solid rgba(255,255,255,.12);padding-right:22px}
+.footer-col:last-child{border-right:none}
+.footer-col-hd{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.45);margin-bottom:11px;display:flex;align-items:center;gap:6px}
+.credit-row{margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.07)}
+.credit-row:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+.credit-name{font-size:13px;font-weight:600;color:#fff;line-height:1.2;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.lead-badge{font-size:9.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;background:var(--gold);color:#fff;padding:1px 8px;border-radius:10px;flex-shrink:0}
+.credit-title{font-size:11.5px;color:rgba(255,255,255,.55);margin-top:2px;line-height:1.35}
+.footer-partner-bar{background:var(--gray1);border-top:1px solid var(--gray2);padding:10px 28px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center}
+.partner-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-right:4px}
+.partner-chip{font-size:10.5px;color:var(--muted);background:var(--w);border:1px solid var(--gray2);border-radius:20px;padding:3px 10px;white-space:nowrap}
+.footer-bottom{background:#0D3B16;color:rgba(255,255,255,.35);font-size:10px;text-align:center;padding:7px 22px;border-top:1px solid rgba(255,255,255,.07);line-height:1.6}
+@media(max-width:800px){.footer-top{grid-template-columns:1fr}.footer-col{border-right:none;border-bottom:1px solid rgba(255,255,255,.08);padding-right:0;padding-bottom:16px}.footer-col:last-child{border-bottom:none}}
 
 /* PRINT */
 @media print{
@@ -290,7 +306,117 @@ body{font-family:var(--fb);font-size:14px;color:var(--text);background:var(--ow)
     <div class="t-content" id="t-content"></div>
   </div>
 </main>
-<footer class="page-footer no-print">DA-RFO IX · Agribusiness Marketing Assistance Division (AMAD) · Regional Price Monitoring Team · Pagadian City, Zamboanga del Sur</footer>
+<footer class="page-footer no-print">
+
+  <!-- DEVELOPER CREDITS -->
+  <div class="footer-top">
+
+    <!-- COL 1: DA-RFO IX / AMAD Team -->
+    <div class="footer-col">
+      <div class="footer-col-hd">
+        <i class="ti ti-building-bank" style="font-size:13px"></i>
+        DA-RFO IX · Agribusiness Marketing Assistance Division
+      </div>
+
+      <div class="credit-row">
+        <div class="credit-name">
+          Elvert G. Simbol
+          <span class="lead-badge">Lead Developer</span>
+        </div>
+        <div class="credit-title">Market Specialist III</div>
+      </div>
+
+      <div class="credit-row">
+        <div class="credit-name">Jonah Lyn D. Corpuz</div>
+        <div class="credit-title">AMAD Chief</div>
+      </div>
+
+      <div class="credit-row">
+        <div class="credit-name">Maria Teresa B. Mangulad</div>
+        <div class="credit-title">AISS Section Chief</div>
+      </div>
+
+      <div class="credit-row">
+        <div class="credit-name">Haijera Pango</div>
+        <div class="credit-title">Agriculturist I</div>
+      </div>
+    </div>
+
+    <!-- COL 2: Commodity Programs -->
+    <div class="footer-col">
+      <div class="footer-col-hd">
+        <i class="ti ti-plant-2" style="font-size:13px"></i>
+        DA Commodity Programs
+      </div>
+
+      <div class="credit-row">
+        <div class="credit-name" style="font-size:12px">High Value Crops Development Program</div>
+        <div class="credit-title">Vegetable &amp; specialty crop assumptions reference</div>
+      </div>
+
+      <div class="credit-row">
+        <div class="credit-name" style="font-size:12px">Rice Program</div>
+        <div class="credit-title">Palay production data &amp; technical parameters</div>
+      </div>
+
+      <div class="credit-row">
+        <div class="credit-name" style="font-size:12px">Corn Program</div>
+        <div class="credit-title">Corn production assumptions reference</div>
+      </div>
+
+      <div class="credit-row">
+        <div class="credit-name" style="font-size:12px">Livestock Program</div>
+        <div class="credit-title">Swine, poultry &amp; large ruminant parameters</div>
+      </div>
+    </div>
+
+    <!-- COL 3: Partner Agencies -->
+    <div class="footer-col">
+      <div class="footer-col-hd">
+        <i class="ti ti-network" style="font-size:13px"></i>
+        Partner Agencies &amp; References
+      </div>
+
+      <div class="credit-row">
+        <div class="credit-name" style="font-size:12px">Philippine Rubber Research Institute</div>
+        <div class="credit-title">Rubber plantation assumptions &amp; tapping parameters</div>
+      </div>
+
+      <div class="credit-row">
+        <div class="credit-name" style="font-size:12px">Bureau of Fisheries &amp; Aquatic Resources</div>
+        <div class="credit-title">Aquaculture production assumptions &amp; fishery data</div>
+      </div>
+
+      <div class="credit-row" style="margin-top:8px">
+        <div class="credit-title" style="color:rgba(255,255,255,.4);font-size:11px;font-style:italic">
+          Fertilizer prices reference: Fertilizer &amp; Pesticide Authority (FPA)<br>
+          Market prices: AMAD Market Monitoring System, Region IX<br>
+          Labor rates: DOLE Regional Wage Order, Region IX
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PARTNER CHIPS -->
+  <div class="footer-partner-bar">
+    <span class="partner-lbl">In coordination with</span>
+    <span class="partner-chip"><i class="ti ti-leaf" style="font-size:10px"></i> HVCDP</span>
+    <span class="partner-chip"><i class="ti ti-plant-2" style="font-size:10px"></i> Rice Program</span>
+    <span class="partner-chip"><i class="ti ti-plant" style="font-size:10px"></i> Corn Program</span>
+    <span class="partner-chip"><i class="ti ti-pig" style="font-size:10px"></i> Livestock Program</span>
+    <span class="partner-chip"><i class="ti ti-circle-dotted" style="font-size:10px"></i> PRRI</span>
+    <span class="partner-chip"><i class="ti ti-fish" style="font-size:10px"></i> BFAR</span>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="footer-bottom">
+    Department of Agriculture · Regional Field Office IX · Agribusiness Marketing Assistance Division (AMAD) · Regional Price Monitoring Team<br>
+    Regional Center, Pagadian City, Zamboanga del Sur &nbsp;·&nbsp; Cost &amp; Return Analysis Calculator v2.0 &nbsp;·&nbsp; <span id="footer-year"></span>
+  </div>
+
+</footer>
+<script>document.getElementById("footer-year").textContent=new Date().getFullYear();</script>
 
 <script>
 /* ============================================================
@@ -386,7 +512,7 @@ const TEMPLATES = {
     label:"Corn (Mais)",icon:"ti-plant",
     groups:{
       prod:[
-        {key:"commodity",label:"Commodity Name",type:"text",value:"Corn – Yellow Mais",locked:true},
+        {key:"commodity",label:"Commodity Name",type:"text",value:"Corn – Yellow Maize",locked:true},
         {key:"scale",label:"Scale",type:"number",value:"1",unit:"Hectare",locked:true},
         {key:"scaleUnit",label:"Scale Unit",type:"text",value:"Hectare",locked:true},
         {key:"period",label:"Production Period",type:"text",value:"January – June 2026",locked:true},
@@ -1391,11 +1517,16 @@ function attachEvents(){
   // Tabs
   document.querySelectorAll(".t-btn").forEach(b=>{ b.onclick=()=>{S.tab=b.dataset.tab;render();}; });
 
-  // Assumption value inputs
+  // Assumption value inputs — text: save silently, re-render on blur; number: re-render immediately
   document.querySelectorAll(".asmp-val-inp").forEach(el=>{
+    const gk=el.dataset.gk, fi=+el.dataset.fi;
+    const isNum = S.groups[gk]?.[fi]?.type === "number";
     el.oninput=()=>{
-      const gk=el.dataset.gk,fi=+el.dataset.fi;
-      S.groups[gk][fi].value=el.value;
+      if(S.groups[gk]?.[fi]) S.groups[gk][fi].value=el.value;
+      if(isNum) render();
+    };
+    if(!isNum) el.onblur=()=>{
+      if(S.groups[gk]?.[fi]) S.groups[gk][fi].value=el.value;
       render();
     };
   });
@@ -1452,18 +1583,47 @@ function attachEvents(){
   const remarksEl=document.getElementById("f-remarks");
   if(remarksEl) remarksEl.oninput=e=>{S.remarks=e.target.value;};
 
-  // Cost items — use .oninput/.onchange/.onclick (not addEventListener) to avoid stacking on re-render
+  // Cost items — text fields update state silently (no re-render while typing)
+  // number/select fields re-render immediately for live totals
   document.querySelectorAll("#cost-tbody tr[data-id]").forEach(row=>{
     const id=+row.dataset.id;
-    const upd=(field,sel,useChange)=>{
+
+    // TEXT fields: update state on every keystroke but DON'T re-render (preserves focus/cursor)
+    // Re-render only on blur so totals update when user leaves the field
+    const textFields=[
+      {field:"desc",sel:".item-desc"},
+      {field:"unit",sel:".item-unit"},
+      {field:"notes",sel:".item-notes"},
+    ];
+    textFields.forEach(({field,sel})=>{
       const el=row.querySelector(sel);
       if(!el) return;
-      const handler=()=>{S.items=S.items.map(i=>i.id===id?{...i,[field]:el.value}:i);render();};
-      if(useChange) el.onchange=handler; else el.oninput=handler;
-    };
-    upd("cat",".item-cat",true);upd("sub",".item-sub",true);
-    upd("desc",".item-desc");upd("qty",".item-qty");upd("unit",".item-unit");
-    upd("price",".item-price");upd("notes",".item-notes");
+      el.oninput=()=>{ S.items=S.items.map(i=>i.id===id?{...i,[field]:el.value}:i); };
+      el.onblur=()=>{ S.items=S.items.map(i=>i.id===id?{...i,[field]:el.value}:i); render(); };
+    });
+
+    // NUMBER fields: re-render on input for live amount calculation
+    const numFields=[
+      {field:"qty",sel:".item-qty"},
+      {field:"price",sel:".item-price"},
+    ];
+    numFields.forEach(({field,sel})=>{
+      const el=row.querySelector(sel);
+      if(!el) return;
+      el.oninput=()=>{ S.items=S.items.map(i=>i.id===id?{...i,[field]:el.value}:i); render(); };
+    });
+
+    // SELECT fields: re-render on change
+    const selFields=[
+      {field:"cat",sel:".item-cat"},
+      {field:"sub",sel:".item-sub"},
+    ];
+    selFields.forEach(({field,sel})=>{
+      const el=row.querySelector(sel);
+      if(!el) return;
+      el.onchange=()=>{ S.items=S.items.map(i=>i.id===id?{...i,[field]:el.value}:i); render(); };
+    });
+
     const del=row.querySelector(".row-del");
     if(del) del.onclick=()=>{S.items=S.items.filter(i=>i.id!==id);render();};
   });
@@ -1504,77 +1664,121 @@ function allAssumptions(){
    EXCEL EXPORT
 ============================================================ */
 function exportExcel(){
-  if(!window.XLSX){alert("SheetJS loading, please retry.");return;}
-  const c=calc();
-  const wb=XLSX.utils.book_new();
-  const comm=gv("commodity"),period=gv("period"),sc=gv("scale"),su=gv("scaleUnit"),yu=gv("yieldUnit");
-  const rows=[
-    ["COST AND RETURN ANALYSIS — DA RFO IX","","","","",""],
-    [],
-    ["Commodity:",comm,"","Period:",period,""],
-    ["Scale:",sc+" "+su,"","Region:",gv("region"),""],
-    ["Analyst:",gv("analyst"),"","Designation:",gv("designation"),""],
-    ["Office:",gv("office")||"—","","Date:",gv("date")||"—",""],
-    [],
-  ];
-  // All assumptions grouped
-  let lastGroup="";
-  allAssumptions().forEach(a=>{
-    if(a.group!==lastGroup){rows.push([a.group,"","","","",""]);lastGroup=a.group;}
-    rows.push(["  "+a.label+(a.calc?" (auto-computed)":""),a.value,"","","",""]);
-  });
-  rows.push([]);
-  rows.push(["PRODUCTION COSTS","","","","",""]);
-  rows.push(["Description","Quantity","Unit","Unit Price (₱)","Amount (₱)","Notes"]);
-  const subcats=[...new Set(S.items.map(i=>i.sub))].sort();
-  subcats.forEach(sub=>{
-    const items=S.items.filter(i=>i.sub===sub);if(!items.length)return;
-    rows.push([sub,"","","","",""]);
-    items.forEach(i=>{
-      const amt=(parseFloat(i.qty)||0)*(parseFloat(i.price)||0);
-      rows.push(["  "+i.desc,+i.qty,i.unit,+i.price,+amt.toFixed(2),i.notes]);
+  try{
+    if(!window.XLSX){alert("SheetJS not loaded yet. Please wait a moment and try again.");return;}
+    const c=calc();
+    const wb=XLSX.utils.book_new();
+    const comm=gv("commodity"),period=gv("period"),sc=gv("scale"),su=gv("scaleUnit"),yu=gv("yieldUnit");
+
+    // ─── Sheet 1: CRA ───
+    const craRows=[
+      ["COST AND RETURN ANALYSIS — DA RFO IX","","","","",""],
+      [],
+      ["Commodity:",comm,"","Period:",period,""],
+      ["Scale:",sc+" "+su,"","Region:",gv("region"),""],
+      ["Analyst:",gv("analyst"),"","Designation:",gv("designation"),""],
+      ["Office:",gv("office")||"—","","Date Prepared:",gv("date")||"—",""],
+      [],
+    ];
+    // assumptions
+    let lastGrpX="";
+    allAssumptions().forEach(a=>{
+      if(a.group!==lastGrpX){craRows.push([a.group,"","","","",""]);lastGrpX=a.group;}
+      craRows.push(["  "+a.label+(a.calc?" [auto-computed]":""),a.value,"","","",""]);
     });
-  });
-  rows.push(["  Non-Cash Labor ("+gv("nonCashPct")+"% of GI)","1","Lot",+c.autoNC.toFixed(2),+c.autoNC.toFixed(2),"Auto"]);
-  rows.push(["  Interest "+gv("interestRate")+"% on cash costs","1","Lot",+c.interest.toFixed(2),+c.interest.toFixed(2),"Auto"]);
-  rows.push(["  Crop Insurance","1","Lot",+c.insurance.toFixed(2),+c.insurance.toFixed(2),"PCIC"]);
-  rows.push([]);
-  rows.push(["Total Cash Cost (A)","","","",+c.tCash.toFixed(2),""]);
-  rows.push(["Financial Costs","","","",+(c.interest+c.insurance).toFixed(2),""]);
-  rows.push(["Non-Cash Costs (B)","","","",+c.tNC.toFixed(2),""]);
-  rows.push(["TOTAL PRODUCTION COST","","","",+c.tCost.toFixed(2),""]);
-  rows.push([]);
-  rows.push(["PROFITABILITY ANALYSIS","","","","",""]);
-  [["Total Yield ("+yu+")",+c.totalY.toFixed(2)],["Farmgate Price (₱/"+yu+")",+c.p],["Gross Income (₱)",+c.gi.toFixed(2)],
-   ["Total Production Cost (₱)",+c.tCost.toFixed(2)],["Net Income (₱)",+c.netInc.toFixed(2)],
-   ["Gross Profit Margin",+(c.margin*100).toFixed(2)+"%"],["ROI",+(c.roi*100).toFixed(2)+"%"],
-   ["Unit Cost (₱/"+yu+")",+c.unitCost.toFixed(4)],["Break-Even Price",+c.beP.toFixed(4)],
-   ["Break-Even Yield ("+yu+")",+c.beY.toFixed(2)],
-   ["Safety Margin – Yield",+c.safetyY.toFixed(2)],["Safety Margin – Price (₱)",+c.safetyP.toFixed(4)],
-   ["Annual Net Income (×"+c.noOfCrops+" cycles)",+(c.netInc*c.noOfCrops).toFixed(2)]
-  ].forEach(([l,v])=>rows.push([l,"","","",v,""]));
-  if(S.remarks){rows.push([]);rows.push(["REMARKS",S.remarks,"","","",""]);}
-  const ws=XLSX.utils.aoa_to_sheet(rows);
-  ws["!cols"]=[{wch:46},{wch:13},{wch:12},{wch:16},{wch:16},{wch:38}];
-  XLSX.utils.book_append_sheet(wb,"CRA",ws);
-  // Sensitivity
-  const sRows=[["SENSITIVITY ANALYSIS","","","","",""],[]];
-  sRows.push(["YIELD SENSITIVITY","","","","",""]);
-  sRows.push(["Scenario","Yield","Gross Income","Total Cost","Net Income","ROI"]);
-  [-30,-20,-10,0,10,20,30].forEach(d=>{const ny=parseFloat(gv("averageYield"))*(1+d/100);const cc=calc(ny,null);sRows.push([(d===0?"Base":d>0?"+"+d+"%":d+"%")+" yield",+ny.toFixed(2),+cc.gi.toFixed(2),+cc.tCost.toFixed(2),+cc.netInc.toFixed(2),+(cc.roi*100).toFixed(2)+"%"]);});
-  sRows.push([]);sRows.push(["PRICE SENSITIVITY","","","","",""]);
-  sRows.push(["Scenario","Farmgate Price","Gross Income","Total Cost","Net Income","ROI"]);
-  [-30,-20,-10,0,10,20,30].forEach(d=>{const np=parseFloat(gv("farmgatePrice"))*(1+d/100);const cc=calc(null,np);sRows.push([(d===0?"Base":d>0?"+"+d+"%":d+"%")+" price",+np.toFixed(2),+cc.gi.toFixed(2),+cc.tCost.toFixed(2),+cc.netInc.toFixed(2),+(cc.roi*100).toFixed(2)+"%"]);});
-  const ws2=XLSX.utils.aoa_to_sheet(sRows);ws2["!cols"]=[{wch:26},{wch:18},{wch:18},{wch:18},{wch:18},{wch:12}];
-  XLSX.utils.book_append_sheet(wb,"Sensitivity",ws2);
-  // VC
-  const vcA=[{n:"Farmer",b:null,s:c.p,m:c.p},{n:"Assembler",b:c.p,s:c.asmP,m:c.asmP-c.p},{n:"Wholesaler",b:c.asmP,s:c.whlP,m:c.whlP-c.asmP},{n:"Retailer",b:c.whlP,s:c.retP,m:c.retP-c.whlP}];
-  const vcRows=[["VALUE CHAIN","","","",""],["Actor","Buying Price (₱)","Selling Price (₱)","Margin (₱)","BCP % Share"]];
-  vcA.forEach(a=>vcRows.push([a.n,a.b!=null?+a.b.toFixed(2):"—",+a.s.toFixed(2),+a.m.toFixed(2),c.retP>0?+((a.m/c.retP)*100).toFixed(2)+"%":"—"]));
-  vcRows.push(["Consumer Price","",+c.retP.toFixed(2),"","100.00%"]);
-  const ws3=XLSX.utils.aoa_to_sheet(vcRows);ws3["!cols"]=[{wch:26},{wch:18},{wch:18},{wch:16},{wch:14}];
-  XLSX.utils.book_append_sheet(wb,"Value Chain",ws3);
-  XLSX.writeFile(wb,`CRA_${comm.replace(/[\s–\/]+/g,"_")}_${period.replace(/[–\s]+/g,"_")}.xlsx`);
+    craRows.push([]);
+    craRows.push(["PRODUCTION COSTS","","","","",""]);
+    craRows.push(["Description","Quantity","Unit","Unit Price (₱)","Amount (₱)","Notes / Basis"]);
+    const xSubcats=[...new Set(S.items.map(i=>i.sub))].sort();
+    xSubcats.forEach(sub=>{
+      const xItems=S.items.filter(i=>i.sub===sub);
+      if(!xItems.length) return;
+      craRows.push([sub,"","","","",""]);
+      xItems.forEach(i=>{
+        const amt=(parseFloat(i.qty)||0)*(parseFloat(i.price)||0);
+        craRows.push(["  "+i.desc, +i.qty, i.unit, +i.price, +amt.toFixed(2), i.notes||""]);
+      });
+    });
+    craRows.push(["  Non-Cash Labor ("+gv("nonCashPct")+"% of Gross Income)","1","Lot",+c.autoNC.toFixed(2),+c.autoNC.toFixed(2),"Auto-computed"]);
+    craRows.push(["  Interest on Capital ("+gv("interestRate")+"%)","1","Lot",+c.interest.toFixed(2),+c.interest.toFixed(2),"Auto-computed"]);
+    craRows.push(["  Crop Insurance (PCIC)","1","Lot",+c.insurance.toFixed(2),+c.insurance.toFixed(2),"PCIC/private"]);
+    craRows.push([]);
+    craRows.push(["Total Cash Cost (A, excl. financial)","","","",+c.tCash.toFixed(2),""]);
+    craRows.push(["Financial Costs (Interest + Insurance)","","","",+(c.interest+c.insurance).toFixed(2),""]);
+    craRows.push(["Non-Cash Costs (B)","","","",+c.tNC.toFixed(2),""]);
+    craRows.push(["TOTAL PRODUCTION COST (A + B)","","","",+c.tCost.toFixed(2),""]);
+    craRows.push([]);
+    craRows.push(["PROFITABILITY ANALYSIS","","","","",""]);
+    [
+      ["Total Yield ("+yu+")", +c.totalY.toFixed(2)],
+      ["Farmgate Price (₱/"+yu+")", +c.p],
+      ["Gross Income (₱)", +c.gi.toFixed(2)],
+      ["Total Production Cost (₱)", +c.tCost.toFixed(2)],
+      ["Net Income (₱)", +c.netInc.toFixed(2)],
+      ["Gross Profit Margin", +(c.margin*100).toFixed(2)+"%"],
+      ["Return on Investment (ROI)", +(c.roi*100).toFixed(2)+"%"],
+      ["Unit Cost (₱/"+yu+")", +c.unitCost.toFixed(4)],
+      ["Break-Even Price (₱/"+yu+")", +c.beP.toFixed(4)],
+      ["Break-Even Yield ("+yu+")", +c.beY.toFixed(2)],
+      ["Safety Margin – Yield", +c.safetyY.toFixed(2)],
+      ["Safety Margin – Price (₱)", +c.safetyP.toFixed(4)],
+      ["Annual Net Income (×"+c.noOfCrops+" cycles)", +(c.netInc*c.noOfCrops).toFixed(2)],
+    ].forEach(([l,v])=>craRows.push([l,"","","",v,""]));
+    if(S.remarks){ craRows.push([]); craRows.push(["REMARKS / NOTES",S.remarks,"","","",""]); }
+    const ws1=XLSX.utils.aoa_to_sheet(craRows);
+    ws1["!cols"]=[{wch:46},{wch:13},{wch:12},{wch:16},{wch:16},{wch:38}];
+    XLSX.utils.book_append_sheet(wb,"CRA",ws1);
+
+    // ─── Sheet 2: Sensitivity ───
+    const sensRows=[["SENSITIVITY ANALYSIS — "+comm,"","","","",""],[]];
+    sensRows.push(["YIELD SENSITIVITY (price held at ₱"+plain(c.p)+"/"+yu+")","","","","",""]);
+    sensRows.push(["Scenario","Yield","Gross Income (₱)","Total Cost (₱)","Net Income (₱)","ROI"]);
+    [-30,-20,-10,0,10,20,30].forEach(d=>{
+      const ny=parseFloat(gv("averageYield"))*(1+d/100);
+      const cc=calc(ny,null);
+      sensRows.push([(d===0?"Base":d>0?"+"+d+"%":d+"%")+" yield",+ny.toFixed(2),+cc.gi.toFixed(2),+cc.tCost.toFixed(2),+cc.netInc.toFixed(2),+(cc.roi*100).toFixed(2)+"%"]);
+    });
+    sensRows.push([]);
+    sensRows.push(["PRICE SENSITIVITY (yield held at "+plain(parseFloat(gv("averageYield"))*(gn("scale",1)),0)+" "+yu+")","","","","",""]);
+    sensRows.push(["Scenario","Farmgate Price (₱)","Gross Income (₱)","Total Cost (₱)","Net Income (₱)","ROI"]);
+    [-30,-20,-10,0,10,20,30].forEach(d=>{
+      const np=parseFloat(gv("farmgatePrice"))*(1+d/100);
+      const cc=calc(null,np);
+      sensRows.push([(d===0?"Base":d>0?"+"+d+"%":d+"%")+" price",+np.toFixed(2),+cc.gi.toFixed(2),+cc.tCost.toFixed(2),+cc.netInc.toFixed(2),+(cc.roi*100).toFixed(2)+"%"]);
+    });
+    const ws2=XLSX.utils.aoa_to_sheet(sensRows);
+    ws2["!cols"]=[{wch:30},{wch:18},{wch:18},{wch:18},{wch:18},{wch:12}];
+    XLSX.utils.book_append_sheet(wb,"Sensitivity",ws2);
+
+    // ─── Sheet 3: Value Chain ───
+    const vcData=[{n:"Farmer",b:null,s:c.p,m:c.p},{n:"Assembler",b:c.p,s:c.asmP,m:c.asmP-c.p},{n:"Wholesaler",b:c.asmP,s:c.whlP,m:c.whlP-c.asmP},{n:"Retailer",b:c.whlP,s:c.retP,m:c.retP-c.whlP}];
+    const vcRows2=[
+      ["VALUE CHAIN ANALYSIS — "+comm,"","","",""],
+      ["Actor","Buying Price (₱)","Selling Price (₱)","Margin (₱)","BCP % Share"],
+    ];
+    vcData.forEach(a=>vcRows2.push([a.n, a.b!=null?+a.b.toFixed(2):"—", +a.s.toFixed(2), +a.m.toFixed(2), c.retP>0?+((a.m/c.retP)*100).toFixed(2)+"%":"—"]));
+    vcRows2.push(["Consumer Price","",+c.retP.toFixed(2),"","100.00%"]);
+    const ws3=XLSX.utils.aoa_to_sheet(vcRows2);
+    ws3["!cols"]=[{wch:26},{wch:18},{wch:18},{wch:16},{wch:14}];
+    XLSX.utils.book_append_sheet(wb,"Value Chain",ws3);
+
+    // ─── Sheet 4: Assumptions (standalone) ───
+    const asmRows=[["ALL ASSUMPTIONS — "+comm,""],["Period: "+period+"  ·  "+sc+" "+su,""],[]];
+    let lastGrpA="";
+    allAssumptions().forEach(a=>{
+      if(a.group!==lastGrpA){ asmRows.push([a.group.toUpperCase(),""]); lastGrpA=a.group; }
+      asmRows.push(["  "+a.label+(a.calc?" [auto]":""), a.value]);
+    });
+    const ws4=XLSX.utils.aoa_to_sheet(asmRows);
+    ws4["!cols"]=[{wch:48},{wch:32}];
+    XLSX.utils.book_append_sheet(wb,"Assumptions",ws4);
+
+    const fname="CRA_"+comm.replace(/[\s–\/]+/g,"_")+"_"+period.replace(/[–\s]+/g,"_")+".xlsx";
+    XLSX.writeFile(wb,fname);
+  } catch(err){
+    console.error("Excel export error:",err);
+    alert("Export failed: "+err.message+"\n\nPlease check the browser console for details.");
+  }
 }
 
 /* ============================================================
