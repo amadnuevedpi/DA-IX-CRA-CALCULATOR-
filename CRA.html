@@ -106,6 +106,28 @@ body{font-family:var(--fb);font-size:14px;color:var(--text);background:var(--ow)
 /* CALC BADGE */
 .calc-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:5px;font-size:10px;font-weight:600;background:var(--teal-bg);color:var(--teal);margin-left:6px;letter-spacing:.02em}
 
+/* ASSUMPTION ON/OFF TOGGLE */
+.asmp-row.std{grid-template-columns:2fr 1fr 36px 36px}
+.asmp-row.calc{grid-template-columns:2fr 1fr 1fr 36px 36px}
+.toggle-btn{width:38px;height:22px;border-radius:11px;border:none;cursor:pointer;position:relative;transition:background .2s;flex-shrink:0;outline:none;display:block}
+.toggle-btn.on{background:var(--g2)}
+.toggle-btn.off{background:var(--gray3)}
+.toggle-btn::after{content:'';position:absolute;top:3px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:left .2s}
+.toggle-btn.on::after{left:19px}
+.toggle-btn.off::after{left:3px}
+.toggle-wrap{display:flex;flex-direction:column;align-items:center;gap:3px;align-self:end;padding-bottom:2px}
+.toggle-wrap .tlbl{font-size:9px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.asmp-row.row-off .asmp-field label{color:var(--gray3)}
+.asmp-row.row-off input{color:var(--gray3)!important;background:var(--gray1)!important;border-color:var(--gray2)!important;text-decoration:line-through}
+.asmp-row.row-off{opacity:.5;pointer-events:none}
+.asmp-row.row-off .toggle-wrap{pointer-events:all;opacity:1}
+.asmp-row.row-off .asmp-del{pointer-events:all;opacity:1}
+
+/* RUBBER MODE: hide post-harvest, DRC in value chain */
+.rubber-mode-hide{display:none!important}
+
+
+
 /* CUSTOM ASSUMPTIONS BOX */
 .ca-box{background:var(--pur-bg);border:1.5px solid var(--pur-b);border-radius:var(--rl);padding:15px 17px;margin-bottom:18px}
 .ca-box-hd{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--pur);margin-bottom:12px;display:flex;align-items:center;gap:6px}
@@ -279,7 +301,7 @@ body{font-family:var(--fb);font-size:14px;color:var(--text);background:var(--ow)
       </div>
       <div class="hdr-txt">
         <span class="hdr-ag">Republic of the Philippines · Department of Agriculture · RFO IX</span>
-        <span class="hdr-main">Cost &amp; Return Calculator</span>
+        <span class="hdr-main">Cost &amp; Return Analysis Calculator</span>
         <span class="hdr-sub">Agri-Fishery Commodities · Zamboanga Peninsula</span>
       </div>
     </div>
@@ -361,7 +383,7 @@ body{font-family:var(--fb);font-size:14px;color:var(--text);background:var(--ow)
 
       <div class="credit-row">
         <div class="credit-name" style="font-size:12px">Corn Program</div>
-        <div class="credit-title">Corn production assumptions reference</div>
+        <div class="credit-title">Yellow maize production assumptions reference</div>
       </div>
 
       <div class="credit-row">
@@ -712,62 +734,84 @@ const TEMPLATES = {
   },
   rubber:{
     label:"Rubber",icon:"ti-circle-dotted",
+    rubberMode:true,
     groups:{
       prod:[
-        {key:"commodity",label:"Commodity",type:"text",value:"Rubber – Latex / Cup Lump",locked:true},
+        {key:"commodity",label:"Commodity",type:"text",value:"Rubber – Cup Lump (Smallholder)",locked:true},
         {key:"scale",label:"Scale",type:"number",value:"1",unit:"Hectare",locked:true},
         {key:"scaleUnit",label:"Scale Unit",type:"text",value:"Hectare",locked:true},
         {key:"period",label:"Period",type:"text",value:"January – December 2026",locked:true},
         {key:"region",label:"Region",type:"text",value:"Region IX – Zamboanga Peninsula",locked:true},
         {key:"analyst",label:"Prepared by",type:"text",value:"",locked:true},
-        {key:"designation",label:"Designation",type:"text",value:""},
-        {key:"office",label:"Office",type:"text",value:""},
-        {key:"date",label:"Date",type:"text",value:""},
-        {key:"averageYield",label:"Average Yield (DRC)",type:"number",value:"1200",unit:"kg/ha",locked:true},
-        {key:"yieldUnit",label:"Yield Unit",type:"text",value:"kg DRC",locked:true},
-        {key:"farmgatePrice",label:"Farmgate Price",type:"number",value:"55",unit:"₱/kg",locked:true},
-        {key:"clone",label:"Clone / Variety",type:"text",value:"RRIM 600"},
-        {key:"treesPerHa",label:"No. of Trees per Hectare",type:"number",value:"500",unit:"trees"},
-        {key:"tappingSystem",label:"Tapping System",type:"text",value:"S/2 d2 (half spiral, 2-day rest)"},
-        {key:"tappingDays",label:"Tapping Days per Year",type:"number",value:"180",unit:"days"},
-        {key:"drc",label:"Dry Rubber Content (DRC)",type:"number",value:"50",unit:"%"},
-        {key:"yieldPerTree",label:"Yield per Tree per Tapping",type:"number",value:"40",unit:"g"},
-        {key:"plantationAge",label:"Plantation Age",type:"number",value:"8",unit:"years"},
-        {key:"stimulation",label:"Stimulation Applied",type:"text",value:"Ethephon 2.5% – 6×/yr"},
-        {key:"noOfCropsPerYear",label:"No. of Harvest Rounds/Year",type:"number",value:"1"},
-        {key:"estYieldPerTree",label:"Est. Annual Yield per Tree",type:"number",value:"",unit:"kg DRC",hint:"= Tapping Days × Yield/Tree × DRC%",calc:true},
+        {key:"designation",label:"Designation",type:"text",value:"",enabled:true},
+        {key:"office",label:"Office",type:"text",value:"",enabled:true},
+        {key:"date",label:"Date",type:"text",value:"",enabled:true},
+        {key:"averageYield",label:"Average Yield (Fresh Cup Lump)",type:"number",value:"2400",unit:"kg/ha/yr",hint:"Fresh cup lump at Bagsakan; ~50% DRC",locked:true},
+        {key:"yieldUnit",label:"Yield Unit",type:"text",value:"kg",locked:true},
+        {key:"farmgatePrice",label:"Bagsakan / Farmgate Price",type:"number",value:"38",unit:"₱/kg fresh cup lump",hint:"Current Region IX price at Bagsakan Center",locked:true},
+        {key:"clone",label:"Clone / Variety",type:"text",value:"RRIM 600 / PB 217",enabled:true},
+        {key:"treesPerHa",label:"No. of Trees per Hectare",type:"number",value:"476",unit:"trees",hint:"Standard: 2.5m × 8.4m spacing",enabled:true},
+        {key:"tappingSystem",label:"Tapping System",type:"text",value:"S/2 d2 (half spiral, alternate day)",enabled:true},
+        {key:"tappingDays",label:"Tapping Days per Year",type:"number",value:"180",unit:"days",enabled:true},
+        {key:"drc",label:"Dry Rubber Content – DRC (info only)",type:"number",value:"50",unit:"%",hint:"Reference only – not used in price/yield calc",enabled:true},
+        {key:"yieldPerTree",label:"Fresh Yield per Tree per Tapping",type:"number",value:"28",unit:"g fresh cup lump",enabled:true},
+        {key:"drcYieldHa",label:"Equivalent DRC Yield (info only)",type:"number",value:"",unit:"kg DRC/ha",hint:"= Fresh Yield × DRC% — reference only",calc:true,enabled:true},
+        {key:"plantationAge",label:"Plantation Age",type:"number",value:"10",unit:"years",enabled:true},
+        {key:"stimulation",label:"Stimulation Applied",type:"text",value:"Ethephon 2.5% – 4×/yr",enabled:true},
+        {key:"noOfCropsPerYear",label:"Harvest Rounds / Year",type:"number",value:"1",locked:true},
       ],
       labor:[
         {key:"laborRateMale",label:"Male Labor Rate",type:"number",value:"400",unit:"₱/manday",locked:true},
         {key:"laborRateFemale",label:"Female Labor Rate",type:"number",value:"350",unit:"₱/manday",locked:true},
-        {key:"landCost",label:"Land Cost / Lease",type:"number",value:"8000",unit:"₱/ha/yr",locked:true},
-        {key:"interestRate",label:"Interest Rate",type:"number",value:"6",unit:"%",locked:true},
-        {key:"insuranceCost",label:"Insurance",type:"number",value:"500",unit:"₱/crop",locked:true},
-        {key:"nonCashPct",label:"Non-Cash Labor",type:"number",value:"15",unit:"% of GI",locked:true},
+        {key:"landCost",label:"Land Cost / Lease",type:"number",value:"5000",unit:"₱/ha/yr",hint:"Imputed or actual; 0 if owned",locked:true},
+        {key:"interestRate",label:"Interest Rate on Capital",type:"number",value:"6",unit:"%",locked:true},
+        {key:"insuranceCost",label:"Insurance Cost",type:"number",value:"300",unit:"₱/yr",locked:true},
+        {key:"nonCashPct",label:"Non-Cash Operator Labor",type:"number",value:"10",unit:"% of Gross Income",hint:"Imputed value of family supervision",locked:true},
+        {key:"tapperSharePct",label:"Tapper Share % (if contract basis)",type:"number",value:"0",unit:"% of gross (0 if daily wage)",enabled:true},
       ],
       postharvest:[
-        {key:"dryingRecovery",label:"Drying Recovery",type:"number",value:"50",unit:"%",hint:"Fresh latex → DRC (approx. 50%)",locked:true},
-        {key:"millingRecovery",label:"Processing Recovery",type:"number",value:"95",unit:"%",locked:true},
-        {key:"dryingFee",label:"Drying Fee",type:"number",value:"0",unit:"₱/kg",locked:true},
-        {key:"transportFarmToMill",label:"Transport to Buyer",type:"number",value:"1.50",unit:"₱/kg",locked:true},
-        {key:"millingFee",label:"Processing Fee",type:"number",value:"2",unit:"₱/kg",locked:true},
-        {key:"assemblerMarkup",label:"Assembler Markup",type:"number",value:"8",unit:"%",locked:true},
-        {key:"wholesalerMarkup",label:"Wholesaler Markup",type:"number",value:"6",unit:"%",locked:true},
-        {key:"retailerMarkup",label:"Retailer Markup",type:"number",value:"5",unit:"%",locked:true},
+        {key:"dryingRecovery",label:"Drying Recovery",type:"number",value:"100",unit:"%",hint:"Rubber: 100 — cup lump price is as-is",locked:true},
+        {key:"millingRecovery",label:"Milling Recovery",type:"number",value:"100",unit:"%",hint:"No milling for cup lump",locked:true},
+        {key:"dryingFee",label:"Drying / Processing Fee",type:"number",value:"0",unit:"₱/kg",locked:true},
+        {key:"transportFarmToMill",label:"Transport (included in Marketing Costs)",type:"number",value:"0",unit:"₱/kg",hint:"Transport to Bagsakan is in cost items below",locked:true},
+        {key:"millingFee",label:"Milling Fee",type:"number",value:"0",unit:"₱/kg",locked:true},
+        {key:"assemblerMarkup",label:"Dealer / Assembler Markup",type:"number",value:"10",unit:"%",locked:true},
+        {key:"wholesalerMarkup",label:"Processor / Wholesaler Markup",type:"number",value:"8",unit:"%",locked:true},
+        {key:"retailerMarkup",label:"End-user / Exporter Markup",type:"number",value:"5",unit:"%",locked:true},
       ],
       marketing:[],
     },
-    custom:[],remarks:"",
+    custom:[
+      {id:1,label:"Price Basis",value:"Fresh cup lump, as-is at Bagsakan Center"},
+      {id:2,label:"Equivalent DRC Price (₱/kg DRC)",value:"₱76 (= ₱38 ÷ 50% DRC)"},
+      {id:3,label:"Price Reference",value:"PRRI / AMAD Region IX – Q1 2026"},
+      {id:4,label:"Tapper Arrangement",value:"Half-day wage: ₱175/half-day × 180 days"},
+      {id:5,label:"Collection Frequency",value:"Bi-weekly (twice per month)"},
+      {id:6,label:"Bagsakan Center",value:"PRRI Accredited Dealer / LGU Bagsakan Center"},
+    ],
+    remarks:"CRA covers Land Preparation to Marketing Cost (Bagsakan Center). DRC conversion and post-harvest processing are EXCLUDED from cost computation — price is stated in fresh cup lump terms matching actual Bagsakan transactions in Region IX. Tapper labor is the dominant cash cost (~40%). ROI improves significantly in older stands (15–20 yrs) and with yield stimulation.",
     items:[
-      {id:1,cat:"A. Cash Costs",sub:"1. Land Preparation",desc:"Weeding & Brushing (Ring)",qty:"6",unit:"Manday",price:"400",notes:"Per ha, 3× per year"},
-      {id:2,cat:"A. Cash Costs",sub:"4. Fertilizer & Pest Management",desc:"Complete Fertilizer 15-15-15",qty:"2",unit:"Bag",price:"1600",notes:""},
-      {id:3,cat:"A. Cash Costs",sub:"4. Fertilizer & Pest Management",desc:"Muriate of Potash 0-0-60",qty:"1",unit:"Bag",price:"1850",notes:""},
-      {id:4,cat:"A. Cash Costs",sub:"4. Fertilizer & Pest Management",desc:"Fungicide (Tapping Panel Dry)",qty:"1",unit:"Bottle",price:"680",notes:""},
-      {id:5,cat:"A. Cash Costs",sub:"4. Fertilizer & Pest Management",desc:"Stimulant (Ethephon 2.5%)",qty:"1",unit:"Bottle",price:"550",notes:"6 applications/yr"},
-      {id:6,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Tapper Labor (Tapping & Collecting)",qty:"180",unit:"Manday",price:"350",notes:"Daily tapping"},
-      {id:7,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Coagulant – Formic Acid",qty:"10",unit:"Liter",price:"180",notes:""},
-      {id:8,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Processing – Sheet Drying",qty:"1",unit:"Per crop",price:"3000",notes:""},
-      {id:9,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Hauling / Transport to Buyer",qty:"1",unit:"Trip",price:"2500",notes:""},
+      {id:1,cat:"A. Cash Costs",sub:"1. Land Preparation",desc:"Ring Weeding & Bole Cleaning",qty:"6",unit:"Manday",price:"400",notes:"2× per year × 3 Mandays"},
+      {id:2,cat:"A. Cash Costs",sub:"1. Land Preparation",desc:"Interrow Slashing / Brushing",qty:"8",unit:"Manday",price:"400",notes:"4× per year × 2 Mandays"},
+      {id:3,cat:"A. Cash Costs",sub:"1. Land Preparation",desc:"Drain & Terrace Maintenance",qty:"3",unit:"Manday",price:"400",notes:"Annual upkeep"},
+      {id:4,cat:"A. Cash Costs",sub:"4. Fertilizer & Pest Management",desc:"Complete Fertilizer 15-15-15",qty:"2",unit:"Bag",price:"1600",notes:"50 kg/bag; split application"},
+      {id:5,cat:"A. Cash Costs",sub:"4. Fertilizer & Pest Management",desc:"Muriate of Potash 0-0-60",qty:"1",unit:"Bag",price:"1850",notes:"Potassium for latex yield"},
+      {id:6,cat:"A. Cash Costs",sub:"4. Fertilizer & Pest Management",desc:"Urea 46-0-0 (supplemental N)",qty:"1",unit:"Bag",price:"1558",notes:"Nitrogen top-dress"},
+      {id:7,cat:"A. Cash Costs",sub:"4. Fertilizer & Pest Management",desc:"Fertilizer Application Labor",qty:"4",unit:"Manday",price:"400",notes:"2 applications × 2 Mandays"},
+      {id:8,cat:"A. Cash Costs",sub:"4. Fertilizer & Pest Management",desc:"Fungicide – Tapping Panel Dryness",qty:"1",unit:"Bottle",price:"680",notes:"COPD/TPD control"},
+      {id:9,cat:"A. Cash Costs",sub:"4. Fertilizer & Pest Management",desc:"Weedicide (Glyphosate)",qty:"2",unit:"Liter",price:"380",notes:"Spot spraying between rows"},
+      {id:10,cat:"A. Cash Costs",sub:"4. Fertilizer & Pest Management",desc:"Stimulant – Ethephon 2.5%",qty:"1",unit:"Bottle",price:"550",notes:"4 applications/yr per ha"},
+      {id:11,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Tapper Labor – Half-day rate",qty:"180",unit:"Half-day",price:"175",notes:"₱175/half-day × 180 tapping days"},
+      {id:12,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Cup Lump Collection & Weighing",qty:"24",unit:"Manday",price:"350",notes:"Twice/month × 12 months"},
+      {id:13,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Coagulant – Formic Acid",qty:"8",unit:"Liter",price:"180",notes:"~0.04 L per tapping day"},
+      {id:14,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Tapping Cups – Annual Replacement",qty:"50",unit:"Piece",price:"25",notes:"Spot cup replacement"},
+      {id:15,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Tapping Knife & Accessories",qty:"1",unit:"Set",price:"800",notes:"Annual sharpening & maintenance"},
+      {id:16,cat:"A. Cash Costs",sub:"5. Harvest & Post-Harvest",desc:"Gunny Sacks / Packaging",qty:"50",unit:"Sack",price:"18",notes:"For cup lump collection"},
+      {id:17,cat:"A. Cash Costs",sub:"6. Other Cash Costs",desc:"Hauling – Farm to Roadside",qty:"24",unit:"Trip",price:"150",notes:"Twice/month × 12 months"},
+      {id:18,cat:"A. Cash Costs",sub:"6. Other Cash Costs",desc:"Transport – Roadside to Bagsakan Center",qty:"12",unit:"Trip",price:"350",notes:"Monthly consolidation delivery"},
+      {id:19,cat:"A. Cash Costs",sub:"6. Other Cash Costs",desc:"Weighing / Tare Fee at Bagsakan",qty:"1",unit:"Per year",price:"500",notes:"Dealer / LGU facility fee"},
+      {id:20,cat:"A. Cash Costs",sub:"6. Other Cash Costs",desc:"Land Tax / Amortization",qty:"1",unit:"Per year",price:"500",notes:"Proportional to 1 ha"},
+      {id:21,cat:"A. Cash Costs",sub:"6. Other Cash Costs",desc:"Miscellaneous / Contingency",qty:"1",unit:"Lot",price:"800",notes:"~2% of other cash costs"},
     ]
   },
   swine:{
@@ -978,6 +1022,7 @@ const GROUP_META={
 /* STATE */
 let S={
   tab:"assumptions",tpl:"palay",nextId:500,nextCaId:300,
+  rubberMode:false,
   groups:deepCopy(TEMPLATES.palay.groups),
   custom:deepCopy(TEMPLATES.palay.custom),
   remarks:TEMPLATES.palay.remarks,
@@ -992,10 +1037,10 @@ function num(v,d=2){if(!isFinite(v)||isNaN(v))return"—";return Number(v).toLoc
 function ni(v){return(isFinite(v)&&!isNaN(v))?Math.round(v).toLocaleString("en-PH"):"—";}
 function pct(v,d=2){return(isFinite(v)&&!isNaN(v))?(v*100).toFixed(d)+"%":"—";}
 function plain(v,d=2){return(isFinite(v)&&!isNaN(v))?Number(v).toFixed(d):"0.00";}
-function gv(key){/* get value from any group */
+function gv(key){/* get value from any group — always returns string */
   for(const gk of Object.keys(S.groups)){
     const f=S.groups[gk].find(f=>f.key===key);
-    if(f) return f.value;
+    if(f) return String(f.value||"");
   }
   return "";
 }
@@ -1021,6 +1066,7 @@ function updateCalcFields(){
         case"dryYieldKg":       f.value=dryY>0?plain(dryY,0):""; break;
         case"milledYieldKg":    f.value=millY>0?plain(millY,0):""; break;
         case"landCostPerCrop":  f.value=plain(gn("landCost")/Math.max(1,gn("noOfCropsPerYear",1)),2); break;
+        case"drcYieldHa":       { const freshY=gn("averageYield")*gn("scale",1); const drcPct=gn("drc",50)/100; f.value=freshY&&drcPct?plain(freshY*drcPct,0):""; break; }
         case"estYieldPerTree":  f.value=tapping&&yTree&&drc?plain(tapping*yTree/1000*drc,2):""; break;
         case"estHarvest":       f.value=stockD&&surv?plain(stockD*surv,0):""; break;
         case"carcassWeight":    f.value=tgtW&&dress?plain(tgtW*dress,2):""; break;
@@ -1052,10 +1098,13 @@ function calc(yOvr,pOvr){
   const unitCost=totalY>0?tCost/totalY:0;
   const beP=totalY>0?tCost/totalY:0;
   const beY=p>0?tCost/p:0;
-  const drR=gn("dryingRecovery",100)/100, mrR=gn("millingRecovery",100)/100;
+  // Rubber mode: skip DRC/postharvest chain — price is already at Bagsakan (final price)
+  const drR=S.rubberMode?1:(gn("dryingRecovery",100)/100);
+  const mrR=S.rubberMode?1:(gn("millingRecovery",100)/100);
   const dryY=totalY*drR, millY=dryY*mrR;
-  const phKg=gn("dryingFee")+gn("transportFarmToMill")+gn("millingFee");
-  const asmC=p+phKg, asmP=asmC*(1+gn("assemblerMarkup")/100);
+  const phKg=S.rubberMode?0:(gn("dryingFee")+gn("transportFarmToMill")+gn("millingFee"));
+  const asmC=p+phKg;
+  const asmP=asmC*(1+gn("assemblerMarkup")/100);
   const whlP=asmP*(1+gn("wholesalerMarkup")/100);
   const retP=whlP*(1+gn("retailerMarkup")/100);
   const noOfCrops=gn("noOfCropsPerYear",1)||1;
@@ -1110,46 +1159,71 @@ function renderAssumptions(){
     const fields=S.groups[gk]||[];
     const rows=fields.map((f,fi)=>{
       const isCalc=!!f.calc;
-      const delBtn=f.locked?
-        `<button class="asmp-del locked" title="Core field – cannot remove"><i class="ti ti-lock"></i></button>`:
-        `<button class="asmp-del" data-gk="${gk}" data-fi="${fi}" title="Remove"><i class="ti ti-trash"></i></button>`;
+      // enabled===undefined means always-on for old fields; false means toggled off
+      const isEnabled=f.enabled!==false;
+      const rowCls="asmp-row "+(isCalc?"calc":"std")+((!isEnabled&&!f.locked)?" row-off":"");
+
+      // toggle button — only for non-locked fields that have enabled property set
+      const hasToggle=!f.locked&&(f.enabled!==undefined||!f.locked);
+      const toggleBtn=hasToggle
+        ?`<div class="toggle-wrap">
+            <span class="tlbl">${isEnabled?"ON":"OFF"}</span>
+            <button class="toggle-btn ${isEnabled?"on":"off"}" data-gk="${gk}" data-fi="${fi}" title="${isEnabled?"Click to exclude from output":"Click to include in output"}"></button>
+          </div>`
+        :`<div style="width:36px"></div>`;
+
+      const delBtn=f.locked
+        ?`<button class="asmp-del locked" title="Core field – cannot remove"><i class="ti ti-lock"></i></button>`
+        :`<button class="asmp-del" data-gk="${gk}" data-fi="${fi}" title="Remove"><i class="ti ti-trash"></i></button>`;
+
       if(isCalc){
-        return `<div class="asmp-row calc" data-gk="${gk}" data-fi="${fi}">
+        return `<div class="${rowCls}" data-gk="${gk}" data-fi="${fi}">
           <div class="asmp-field">
             <label>${esc(f.label)}<span class="calc-badge"><i class="ti ti-calculator" style="font-size:9px"></i>Auto</span></label>
-            <input type="text" value="${esc(f.label)}" data-gk="${gk}" data-fi="${fi}" data-field="label" class="asmp-lbl-inp">
+            <input type="text" value="${esc(f.label)}" data-gk="${gk}" data-fi="${fi}" data-field="label" class="asmp-lbl-inp"${!isEnabled?" disabled":""}>
           </div>
           <div class="asmp-field">
             <label>Unit</label>
-            <input type="text" value="${esc(f.unit||"")}" data-gk="${gk}" data-fi="${fi}" data-field="unit" class="asmp-unit-inp" placeholder="unit">
+            <input type="text" value="${esc(f.unit||"")}" data-gk="${gk}" data-fi="${fi}" data-field="unit" class="asmp-unit-inp" placeholder="unit"${!isEnabled?" disabled":""}>
           </div>
           <div class="asmp-field">
             <label>Computed Value</label>
             <input type="text" value="${esc(f.value||"—")}" readonly style="background:var(--g3);color:var(--g);font-weight:600;cursor:default">
           </div>
+          ${toggleBtn}
           ${delBtn}
         </div>`;
       }
-      const inputEl=f.type==="number"?
-        `<input type="number" value="${esc(f.value)}" data-gk="${gk}" data-fi="${fi}" data-field="value" class="asmp-val-inp">`:
-        `<input type="text" value="${esc(f.value)}" data-gk="${gk}" data-fi="${fi}" data-field="value" class="asmp-val-inp">`;
-      return `<div class="asmp-row std" data-gk="${gk}" data-fi="${fi}">
+      const inputEl=f.type==="number"
+        ?`<input type="number" value="${esc(f.value)}" data-gk="${gk}" data-fi="${fi}" data-field="value" class="asmp-val-inp"${!isEnabled?" disabled":""}>`
+        :`<input type="text" value="${esc(f.value)}" data-gk="${gk}" data-fi="${fi}" data-field="value" class="asmp-val-inp"${!isEnabled?" disabled":""}>`;
+      return `<div class="${rowCls}" data-gk="${gk}" data-fi="${fi}">
         <div class="asmp-field">
           <label>${esc(f.label)}${f.unit?` <span style="color:var(--muted);font-weight:400">(${esc(f.unit)})</span>`:""}${f.hint?`<span style="display:block;font-size:10px;color:var(--muted);margin-top:1px">${esc(f.hint)}</span>`:""}</label>
           ${inputEl}
         </div>
         <div class="asmp-field">
           <label>Unit / Label</label>
-          <input type="text" value="${esc(f.unit||"")}" data-gk="${gk}" data-fi="${fi}" data-field="unit" class="asmp-unit-inp" placeholder="e.g. kg, %, days">
+          <input type="text" value="${esc(f.unit||"")}" data-gk="${gk}" data-fi="${fi}" data-field="unit" class="asmp-unit-inp" placeholder="e.g. kg, %, days"${!isEnabled?" disabled":""}>
         </div>
+        ${toggleBtn}
         ${delBtn}
       </div>`;
     }).join("");
+
+    // rubber mode banner for postharvest group
+    const rubberBanner=(gk==="postharvest"&&S.rubberMode)
+      ?`<div style="background:var(--gold-bg);border:1.5px solid var(--gold);border-radius:var(--r);padding:10px 14px;margin-bottom:14px;font-size:12.5px;color:var(--gold);display:flex;align-items:center;gap:8px;">
+          <i class="ti ti-info-circle" style="font-size:16px"></i>
+          <span><strong>Rubber Mode Active:</strong> Post-harvest recovery rates and processing fees are <strong>excluded from computation</strong> — Bagsakan price already reflects final transaction value. These fields are shown for reference only.</span>
+        </div>`:"";
+
     return `<div class="asmp-group">
       <div class="asmp-group-hd">
         <div class="asmp-group-title"><i class="ti ${meta.icon}"></i>${meta.title}</div>
         <button class="asmp-add-btn" data-gk="${gk}"><i class="ti ti-plus"></i> ${meta.addLabel}</button>
       </div>
+      ${rubberBanner}
       <div class="asmp-rows" id="grp-${gk}">${rows}</div>
     </div>`;
   }
@@ -1162,14 +1236,22 @@ function renderAssumptions(){
       <button class="ca-del" title="Remove"><i class="ti ti-trash"></i></button>
     </div>`).join("");
 
+  const rubberNotice=S.rubberMode
+    ?`<div style="background:var(--g3);border:1.5px solid var(--g4);border-radius:var(--r);padding:10px 14px;margin-bottom:16px;font-size:12.5px;color:var(--g2);display:flex;align-items:center;gap:8px;">
+        <i class="ti ti-leaf" style="font-size:16px"></i>
+        <span><strong>Rubber (Cup Lump) Mode:</strong> CRA covers <strong>Land Preparation → Marketing Cost (Bagsakan Center)</strong> only. DRC conversion and post-harvest processing chain are excluded from all computations.</span>
+      </div>`:
+    ``;
+
   return `
+    ${rubberNotice}
     ${buildGroup("prod")}
     ${buildGroup("labor")}
     ${buildGroup("postharvest")}
     ${buildGroup("marketing")}
     <div class="ca-box">
       <div class="ca-box-hd"><i class="ti ti-adjustments-alt"></i>Additional / Commodity-Specific Assumptions
-        <span style="margin-left:auto;font-size:10px;font-weight:400;opacity:.8">Included in all output documents</span>
+        <span style="margin-left:auto;font-size:10px;font-weight:400;opacity:.8">Included in all output documents · Toggle OFF to exclude from printed report</span>
       </div>
       <div id="ca-rows">${caRows}</div>
       <button class="ca-add" id="ca-add-btn"><i class="ti ti-plus"></i> Add custom assumption</button>
@@ -1184,9 +1266,11 @@ function renderAssumptions(){
     <div class="legend-box" style="margin-top:16px">
       <strong>Legend:</strong> PW = Pakyaw · DAS = Days after sowing · FPA = Fertilizer & Pesticide Authority · MC = Moisture content
       · BCP = Breakdown of consumer's peso · FCR = Feed Conversion Ratio · DRC = Dry Rubber Content · ADG = Average Daily Gain
-      · PCIC = Philippine Crop Insurance Corporation · GI = Gross Income · HVC = High Value Crops
-      <br><strong>Auto fields</strong> (green badge) are computed automatically from other assumptions and update in real time.
-      <strong>Locked fields</strong> (lock icon) are core fields used in calculations and cannot be removed.
+      · PCIC = Philippine Crop Insurance Corporation · GI = Gross Income · HVC = High Value Crops<br>
+      <strong>🟢 Toggle ON</strong> = field included in output documents &nbsp;·&nbsp;
+      <strong>⚫ Toggle OFF</strong> = field hidden from printed report (still saved) &nbsp;·&nbsp;
+      <strong>Auto</strong> = auto-computed from other fields &nbsp;·&nbsp;
+      <strong>🔒</strong> = core calc field, cannot be removed
     </div>`;
 }
 
@@ -1213,6 +1297,10 @@ function renderCosts(c){
   });
   return `
     <button class="add-row-btn" id="add-item"><i class="ti ti-plus"></i> Add cost item</button>
+    ${S.rubberMode?`<div style="background:var(--g3);border:1.5px solid var(--g4);border-radius:var(--r);padding:10px 15px;margin-bottom:12px;font-size:12.5px;color:var(--g2);display:flex;align-items:center;gap:8px">
+      <i class="ti ti-leaf" style="font-size:15px"></i>
+      <span><strong>Rubber Mode:</strong> Cost items cover <strong>Land Preparation → Marketing Cost (Bagsakan Center)</strong> only. DRC and post-harvest processing are excluded.</span>
+    </div>`:""}
     <div class="tbl-wrap">
     <table>
       <thead><tr><th>Category</th><th>Sub-category</th><th>Description</th>
@@ -1285,6 +1373,10 @@ function renderResults(c,isProfit,comm,scale,su,period,yu){
       <span>${esc(comm)} · ${esc(scale)} ${esc(su)} · ${esc(period)}
         &nbsp;·&nbsp; <strong>${isProfit?"✓ Profitable":"✗ Loss-making"}</strong> at current assumptions</span>
     </div>
+    ${S.rubberMode?`<div style="background:var(--g3);border:1.5px solid var(--g4);border-radius:var(--r);padding:11px 15px;margin-bottom:16px;font-size:13px;color:var(--g2);display:flex;align-items:center;gap:8px">
+      <i class="ti ti-leaf" style="font-size:16px"></i>
+      <span><strong>Rubber Mode:</strong> CRA covers <strong>Land Preparation → Marketing Cost (Bagsakan Center)</strong>. DRC conversion and post-harvest processing costs are <strong>excluded from computation</strong>. Price is fresh cup lump at Bagsakan (₱${num(c.p)}/kg).</span>
+    </div>`:""}
     ${caDisp}
 
     <!-- DISCUSSION GRID -->
@@ -1355,9 +1447,9 @@ function renderResults(c,isProfit,comm,scale,su,period,yu){
       </div>
 
       <div class="discuss-card orange">
-        <div class="discuss-title" style="color:var(--ora)"><i class="ti ti-calendar-stats"></i>Annual Outlook</div>
+        <div class="discuss-title" style="color:var(--ora)"><i class="ti ti-calendar-stats"></i>Annual Outlook ${S.rubberMode?"(Tapping Season)":""}</div>
         <div class="discuss-metric" style="color:var(--ora)">₱${ni(annualNet)}</div>
-        <div class="discuss-sub">Projected annual net income (×${c.noOfCrops} cycles)</div>
+        <div class="discuss-sub">${S.rubberMode?"Annual net income from tapping":"Projected annual net income (×"+c.noOfCrops+" cycles)"}</div>
         <div class="discuss-body" style="margin-top:8px">
           ${c.noOfCrops>1
             ?`With <strong>${c.noOfCrops} cycles per year</strong>, annual gross income can reach <strong>₱${ni(c.gi*c.noOfCrops)}</strong>
@@ -1476,25 +1568,54 @@ function renderVC(c,yu){
   </tr>`).join("");
   return`
     <div class="sec-h"><i class="ti ti-network"></i>Price Flow by Market Actor</div>
+    ${S.rubberMode?`<div style="background:var(--gold-bg);border:1.5px solid var(--gold);border-radius:var(--r);padding:10px 15px;margin-bottom:12px;font-size:12.5px;color:var(--gold);display:flex;align-items:center;gap:8px">
+      <i class="ti ti-info-circle" style="font-size:15px"></i>
+      <span><strong>Rubber Mode – Bagsakan to End-user Chain:</strong> Price flow starts at Bagsakan Center farmgate (₱${num(c.p)}/kg fresh cup lump). DRC conversion and post-harvest processing costs are excluded from computation.</span>
+    </div>`:""}
     <div class="vc-flow">${flow}</div>
-    <div class="sec-h"><i class="ti ti-percentage"></i>Marketing Margins &amp; BCP</div>
+    <div class="sec-h"><i class="ti ti-percentage"></i>${S.rubberMode?"Marketing Margins – Bagsakan to End-user":"Marketing Margins &amp; BCP"}</div>
     <div class="tbl-wrap" style="margin-bottom:20px"><table>
       <thead><tr><th>Actor</th><th class="text-right">Buying price (₱)</th><th class="text-right">Selling price (₱)</th><th class="text-right">Margin (₱)</th><th class="text-right">BCP % share</th></tr></thead>
       <tbody>${trows}</tbody>
       <tfoot><tr><td>Consumer price</td><td></td><td class="text-right">₱${num(c.retP)}</td><td></td><td class="text-right">100.00%</td></tr></tfoot>
     </table></div>
-    <div class="sec-h"><i class="ti ti-arrows-down-up"></i>Post-Harvest Summary</div>
-    <div class="sum-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:14px">
-      <div class="m-card"><div class="m-lbl">Fresh / live yield</div><div class="m-val" style="font-size:17px">${ni(c.totalY)} ${esc(yu)}</div><div class="m-sub">At farm gate</div></div>
-      <div class="m-card"><div class="m-lbl">After drying</div><div class="m-val" style="font-size:17px">${ni(c.dryY)} ${esc(yu)}</div><div class="m-sub">${gv("dryingRecovery")}% recovery</div></div>
-      <div class="m-card"><div class="m-lbl">After processing</div><div class="m-val" style="font-size:17px">${ni(c.millY)} ${esc(yu)}</div><div class="m-sub">${gv("millingRecovery")}% recovery</div></div>
-    </div>
+    <div class="sec-h"><i class="ti ti-arrows-down-up"></i>Post-Harvest & Marketing Summary</div>
+    ${S.rubberMode
+      ? `<div style="background:var(--gold-bg);border:1.5px solid var(--gold);border-radius:var(--r);padding:11px 15px;font-size:13px;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:8px">
+           <i class="ti ti-info-circle" style="font-size:15px"></i>
+           <span><strong>Rubber Mode:</strong> DRC conversion &amp; post-harvest processing excluded. Price basis is fresh cup lump at Bagsakan Center (₱${num(c.p)}/kg). Marketing chain shows dealer → processor → end-user markups.</span>
+         </div>
+         <div class="sum-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:12px">
+           <div class="m-card"><div class="m-lbl">Total Fresh Cup Lump</div><div class="m-val" style="font-size:17px">${ni(c.totalY)} kg</div><div class="m-sub">At Bagsakan Center</div></div>
+           <div class="m-card"><div class="m-lbl">Gross Income</div><div class="m-val" style="font-size:17px">₱${ni(c.gi)}</div><div class="m-sub">@ ₱${num(c.p)}/kg</div></div>
+           <div class="m-card"><div class="m-lbl">DRC Equivalent (ref only)</div><div class="m-val" style="font-size:17px">${ni(c.totalY*0.5)} kg DRC</div><div class="m-sub">50% DRC — info only</div></div>
+         </div>`
+      : `<div class="sum-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:14px">
+           <div class="m-card"><div class="m-lbl">Fresh / live yield</div><div class="m-val" style="font-size:17px">${ni(c.totalY)} ${esc(yu)}</div><div class="m-sub">At farm gate</div></div>
+           <div class="m-card"><div class="m-lbl">After drying</div><div class="m-val" style="font-size:17px">${ni(c.dryY)} ${esc(yu)}</div><div class="m-sub">${gv("dryingRecovery")}% recovery</div></div>
+           <div class="m-card"><div class="m-lbl">After processing</div><div class="m-val" style="font-size:17px">${ni(c.millY)} ${esc(yu)}</div><div class="m-sub">${gv("millingRecovery")}% recovery</div></div>
+         </div>`
+    }
     <div class="card">
-      ${[["Drying fee",`₱${num(gn("dryingFee"))} / unit`],["Transport farm→consolidator",`₱${num(gn("transportFarmToMill"))} / unit`],
-         ["Processing/milling fee",`₱${num(gn("millingFee"))} / unit`],["Total post-harvest cost",`₱${num(c.phKg)} / unit`],
-         ["Assembler landed cost",`₱${num(c.asmC)} / unit`],["Assembler selling price",`₱${num(c.asmP)} / unit`],
-         ["Wholesaler selling price",`₱${num(c.whlP)} / unit`],["Consumer price (retail)",`₱${num(c.retP)} / unit`]]
-         .map(([l,v])=>`<div class="kv"><span class="k">${l}</span><span class="v">${v}</span></div>`).join("")}
+      ${(S.rubberMode
+        ? [
+            ["Farmgate / Bagsakan price",`₱${num(c.p)} / kg fresh cup lump`],
+            ["Dealer total cost (incl. transport)",`₱${num(c.asmC)} / kg`],
+            ["Dealer selling price",`₱${num(c.asmP)} / kg`],
+            ["Processor / wholesaler price",`₱${num(c.whlP)} / kg`],
+            ["End-user / exporter price",`₱${num(c.retP)} / kg`],
+          ]
+        : [
+            ["Drying fee",`₱${num(gn("dryingFee"))} / unit`],
+            ["Transport farm→consolidator",`₱${num(gn("transportFarmToMill"))} / unit`],
+            ["Processing/milling fee",`₱${num(gn("millingFee"))} / unit`],
+            ["Total post-harvest cost",`₱${num(c.phKg)} / unit`],
+            ["Assembler landed cost",`₱${num(c.asmC)} / unit`],
+            ["Assembler selling price",`₱${num(c.asmP)} / unit`],
+            ["Wholesaler selling price",`₱${num(c.whlP)} / unit`],
+            ["Consumer price (retail)",`₱${num(c.retP)} / unit`],
+          ]
+      ).map(([l,v])=>`<div class="kv"><span class="k">${l}</span><span class="v">${v}</span></div>`).join("")}
     </div>`;
 }
 
@@ -1506,6 +1627,7 @@ function attachEvents(){
   document.querySelectorAll(".tpl-btn").forEach(b=>{ b.onclick=()=>{
     const t=TEMPLATES[b.dataset.tpl];if(!t)return;
     S.tpl=b.dataset.tpl;
+    S.rubberMode=!!t.rubberMode;
     S.groups=deepCopy(t.groups);
     S.custom=deepCopy(t.custom);
     S.remarks=t.remarks||"";
@@ -1516,6 +1638,18 @@ function attachEvents(){
 
   // Tabs
   document.querySelectorAll(".t-btn").forEach(b=>{ b.onclick=()=>{S.tab=b.dataset.tab;render();}; });
+
+  // Assumption ON/OFF toggle buttons
+  document.querySelectorAll(".toggle-btn").forEach(btn=>{
+    btn.onclick=()=>{
+      const gk=btn.dataset.gk, fi=+btn.dataset.fi;
+      if(!S.groups[gk]||!S.groups[gk][fi]) return;
+      const f=S.groups[gk][fi];
+      // toggle: if enabled===undefined treat as true first
+      f.enabled=(f.enabled===false)?true:false;
+      render();
+    };
+  });
 
   // Assumption value inputs — text: save silently, re-render on blur; number: re-render immediately
   document.querySelectorAll(".asmp-val-inp").forEach(el=>{
@@ -1552,7 +1686,7 @@ function attachEvents(){
   // Add assumption
   document.querySelectorAll(".asmp-add-btn").forEach(b=>{ b.onclick=()=>{
     const gk=b.dataset.gk;
-    S.groups[gk].push({key:"custom_"+Date.now(),label:"New Assumption",type:"text",value:""});
+    S.groups[gk].push({key:"custom_"+Date.now(),label:"New Assumption",type:"text",value:"",enabled:true});
     render();
     const rows=document.querySelectorAll(`#grp-${gk} .asmp-val-inp`);
     if(rows.length) rows[rows.length-1].focus();
@@ -1646,16 +1780,25 @@ function allAssumptions(){
   const out=[];
   ["prod","labor","postharvest","marketing"].forEach(gk=>{
     const meta=GROUP_META[gk];
+    // For rubber: skip postharvest group from output (reference only)
+    if(S.rubberMode && gk==="postharvest") return;
     (S.groups[gk]||[]).forEach(f=>{
-      const val=f.calc?f.value:f.value;
+      // Skip if user toggled OFF (enabled===false) — unless it's a locked core field
+      if(f.enabled===false && !f.locked) return;
+      const val=String(f.value||"");
+      if(val==="") return; // skip empty
       const numVal=parseFloat(val);
-      if(val===""||val===null||val===undefined) return;
       if(!isNaN(numVal)&&numVal===0) return; // skip zero numeric
-      out.push({group:meta.title,label:f.label,value:val+(f.unit?" "+f.unit:""),calc:!!f.calc});
+      out.push({
+        group:String(meta.title||gk),
+        label:String(f.label||"")+(f.calc?" [auto-computed]":""),
+        value:String(val)+(f.unit?" "+String(f.unit):""),
+        calc:!!f.calc
+      });
     });
   });
   S.custom.filter(ca=>ca.label&&ca.value).forEach(ca=>{
-    out.push({group:"Additional Assumptions",label:ca.label,value:ca.value,calc:false});
+    out.push({group:"Additional Assumptions",label:String(ca.label||""),value:String(ca.value||""),calc:false});
   });
   return out;
 }
@@ -1668,7 +1811,7 @@ function exportExcel(){
     if(!window.XLSX){alert("SheetJS not loaded yet. Please wait a moment and try again.");return;}
     const c=calc();
     const wb=XLSX.utils.book_new();
-    const comm=gv("commodity"),period=gv("period"),sc=gv("scale"),su=gv("scaleUnit"),yu=gv("yieldUnit");
+    const comm=String(gv("commodity")||"Commodity"),period=String(gv("period")||"Period"),sc=String(gv("scale")||"1"),su=String(gv("scaleUnit")||"Unit"),yu=String(gv("yieldUnit")||"kg");
 
     // ─── Sheet 1: CRA ───
     const craRows=[
@@ -1708,10 +1851,17 @@ function exportExcel(){
     craRows.push(["Non-Cash Costs (B)","","","",+c.tNC.toFixed(2),""]);
     craRows.push(["TOTAL PRODUCTION COST (A + B)","","","",+c.tCost.toFixed(2),""]);
     craRows.push([]);
+    if(S.rubberMode){
+      craRows.push(["NOTE: RUBBER MODE","","","","",""]);
+      craRows.push(["CRA covers Land Preparation to Marketing Cost (Bagsakan Center) only.","","","","",""]);
+      craRows.push(["DRC conversion and post-harvest processing are EXCLUDED from computation.","","","","",""]);
+      craRows.push(["Price basis: Fresh cup lump at Bagsakan Center (₱"+c.p.toFixed(2)+"/kg).","","","","",""]);
+      craRows.push([]);
+    }
     craRows.push(["PROFITABILITY ANALYSIS","","","","",""]);
-    [
+    const profRows=[
       ["Total Yield ("+yu+")", +c.totalY.toFixed(2)],
-      ["Farmgate Price (₱/"+yu+")", +c.p],
+      [S.rubberMode?"Bagsakan / Farmgate Price (₱/kg fresh cup lump)":"Farmgate Price (₱/"+yu+")", +c.p],
       ["Gross Income (₱)", +c.gi.toFixed(2)],
       ["Total Production Cost (₱)", +c.tCost.toFixed(2)],
       ["Net Income (₱)", +c.netInc.toFixed(2)],
@@ -1723,7 +1873,12 @@ function exportExcel(){
       ["Safety Margin – Yield", +c.safetyY.toFixed(2)],
       ["Safety Margin – Price (₱)", +c.safetyP.toFixed(4)],
       ["Annual Net Income (×"+c.noOfCrops+" cycles)", +(c.netInc*c.noOfCrops).toFixed(2)],
-    ].forEach(([l,v])=>craRows.push([l,"","","",v,""]));
+    ];
+    if(S.rubberMode){
+      profRows.push(["DRC Equivalent Yield (info only)", +(c.totalY*0.5).toFixed(2)+" kg DRC"]);
+      profRows.push(["Equiv. DRC Price (info only)", "₱"+num(c.p/0.5)+"/kg DRC"]);
+    }
+    profRows.forEach(([l,v])=>craRows.push([l,"","","",v,""]));
     if(S.remarks){ craRows.push([]); craRows.push(["REMARKS / NOTES",S.remarks,"","","",""]); }
     const ws1=XLSX.utils.aoa_to_sheet(craRows);
     ws1["!cols"]=[{wch:46},{wch:13},{wch:12},{wch:16},{wch:16},{wch:38}];
@@ -1766,7 +1921,7 @@ function exportExcel(){
     const asmRows=[["ALL ASSUMPTIONS — "+comm,""],["Period: "+period+"  ·  "+sc+" "+su,""],[]];
     let lastGrpA="";
     allAssumptions().forEach(a=>{
-      if(a.group!==lastGrpA){ asmRows.push([a.group.toUpperCase(),""]); lastGrpA=a.group; }
+      if(a.group!==lastGrpA){ asmRows.push([String(a.group||"").toUpperCase(),""]); lastGrpA=a.group; }
       asmRows.push(["  "+a.label+(a.calc?" [auto]":""), a.value]);
     });
     const ws4=XLSX.utils.aoa_to_sheet(asmRows);
@@ -1790,7 +1945,7 @@ function exportPDF(){
   const c=calc();
   const pageW=doc.internal.pageSize.getWidth(),pageH=doc.internal.pageSize.getHeight();
   const mg=14;let y=mg;
-  const comm=gv("commodity"),period=gv("period"),sc=gv("scale"),su=gv("scaleUnit"),yu=gv("yieldUnit");
+  const comm=String(gv("commodity")||"Commodity"),period=String(gv("period")||"Period"),sc=String(gv("scale")||"1"),su=String(gv("scaleUnit")||"Unit"),yu=String(gv("yieldUnit")||"kg");
   const G=[27,90,35],LG=[232,245,233],GLD=[200,150,12],MUT=[114,114,106],RD=[183,28,28],PUR=[106,27,154],PUR2=[243,229,245],TL=[0,105,92],TL2=[224,242,241];
   const drawHdr=()=>{
     doc.setFillColor(...G);doc.rect(0,0,pageW,14,"F");
@@ -1817,7 +1972,7 @@ function exportPDF(){
   secH("Assumptions");
   let lastGrp="";
   allAssumptions().forEach(a=>{
-    if(a.group!==lastGrp){if(lastGrp)y+=2;doc.setFontSize(7.5);doc.setFont("helvetica","bold");doc.setTextColor(...G);chk(5);doc.text(a.group.toUpperCase(),mg+2,y);y+=4.5;lastGrp=a.group;}
+    if(a.group!==lastGrp){if(lastGrp)y+=2;doc.setFontSize(7.5);doc.setFont("helvetica","bold");doc.setTextColor(...G);chk(5);doc.text(String(a.group||"").toUpperCase(),mg+2,y);y+=4.5;lastGrp=a.group;}
     a.calc?kvC(a.label+(a.calc?" (computed)":""),a.value,PUR):kv(a.label,a.value);
   });
   y+=4;
@@ -1863,17 +2018,38 @@ function exportPDF(){
   const sPB=[-30,-20,-10,0,10,20,30].map(d=>{const np=parseFloat(gv("farmgatePrice"))*(1+d/100);const cc=calc(null,np);const iB=d===0,iP=cc.netInc>=0;const fill=iB?[255,248,225]:iP?LG:[255,235,238];
     return[{content:iB?"▶ Base":d>0?"+"+d+"%":d+"%",styles:{fillColor:fill,fontStyle:iB?"bold":"normal"}},{content:"₱"+num(np),styles:{halign:"right",fillColor:fill}},{content:"₱"+ni(cc.gi),styles:{halign:"right",fillColor:fill}},{content:"₱"+ni(cc.tCost),styles:{halign:"right",fillColor:fill}},{content:"₱"+ni(cc.netInc),styles:{halign:"right",fillColor:fill,textColor:iB?GLD:iP?G:RD,fontStyle:"bold"}},{content:pct(cc.roi),styles:{halign:"right",fillColor:fill,textColor:iB?GLD:iP?G:RD,fontStyle:"bold"}}];});
   doc.autoTable({head:[["Scenario","Farmgate Price","Gross Income","Total Cost","Net Income","ROI"]],body:sPB,startY:y,margin:{left:mg,right:mg},styles:{fontSize:8,cellPadding:1.8},headStyles:{fillColor:G,textColor:255,fontStyle:"bold",fontSize:7.5},didDrawPage:()=>drawHdr()});y=doc.lastAutoTable.finalY+6;
-  // VC
-  secH("Value Chain & Marketing Margins");
-  const vcA=[{n:"Farmer",b:null,s:c.p,m:c.p},{n:"Assembler",b:c.p,s:c.asmP,m:c.asmP-c.p},{n:"Wholesaler",b:c.asmP,s:c.whlP,m:c.whlP-c.asmP},{n:"Retailer",b:c.whlP,s:c.retP,m:c.retP-c.whlP}];
+  // VC — rubber mode uses Bagsakan-based actor names
+  secH(S.rubberMode?"Value Chain – Bagsakan to End-user (Rubber)":"Value Chain & Marketing Margins");
+  if(S.rubberMode){
+    chk(10);
+    doc.setFillColor(255,248,225);doc.rect(mg,y,pageW-mg*2,9,"F");
+    doc.setFontSize(8);doc.setFont("helvetica","italic");doc.setTextColor(200,150,12);
+    doc.text("Rubber Mode: Price basis = fresh cup lump at Bagsakan Center (₱"+num(c.p)+"/kg). DRC conversion excluded.",mg+3,y+6);
+    y+=12;
+  }
+  const vcA=S.rubberMode
+    ?[{n:"Farmer (Bagsakan price)",b:null,s:c.p,m:c.p},
+      {n:"Dealer / Accredited Buyer",b:c.p,s:c.asmP,m:c.asmP-c.p},
+      {n:"Processor / Wholesaler",b:c.asmP,s:c.whlP,m:c.whlP-c.asmP},
+      {n:"End-user / Exporter",b:c.whlP,s:c.retP,m:c.retP-c.whlP}]
+    :[{n:"Farmer",b:null,s:c.p,m:c.p},
+      {n:"Assembler",b:c.p,s:c.asmP,m:c.asmP-c.p},
+      {n:"Wholesaler",b:c.asmP,s:c.whlP,m:c.whlP-c.asmP},
+      {n:"Retailer",b:c.whlP,s:c.retP,m:c.retP-c.whlP}];
+  const vcLastLabel=S.rubberMode?"End-user Price":"Consumer Price";
   doc.autoTable({head:[["Market Actor","Buying Price (₱)","Selling Price (₱)","Margin (₱)","BCP % Share"]],
     body:[...vcA.map(a=>[a.n,a.b!=null?"₱"+num(a.b):"—","₱"+num(a.s),"₱"+num(a.m),c.retP>0?((a.m/c.retP)*100).toFixed(2)+"%":"—"]),
-      [{content:"Consumer Price",styles:{fontStyle:"bold"}},{content:""},{"content":"₱"+num(c.retP),styles:{fontStyle:"bold",textColor:G}},{content:""},{content:"100.00%",styles:{fontStyle:"bold"}}]],
+      [{content:vcLastLabel,styles:{fontStyle:"bold"}},{content:""},{"content":"₱"+num(c.retP),styles:{fontStyle:"bold",textColor:G}},{content:""},{content:"100.00%",styles:{fontStyle:"bold"}}]],
     startY:y,margin:{left:mg,right:mg},styles:{fontSize:8,cellPadding:1.8},headStyles:{fillColor:G,textColor:255,fontStyle:"bold",fontSize:7.5},
     columnStyles:{1:{halign:"right"},2:{halign:"right"},3:{halign:"right",textColor:G},4:{halign:"right"}},
     didDrawPage:()=>drawHdr()});y=doc.lastAutoTable.finalY+6;
-  kv("Drying recovery",gv("dryingRecovery")+"%");kv("After drying yield",ni(c.dryY)+" "+yu);
-  kv("Milling recovery",gv("millingRecovery")+"%");kv("After processing yield",ni(c.millY)+" "+yu);
+  if(!S.rubberMode){
+    kv("Drying recovery",gv("dryingRecovery")+"%");kv("After drying yield",ni(c.dryY)+" "+yu);
+    kv("Milling recovery",gv("millingRecovery")+"%");kv("After processing yield",ni(c.millY)+" "+yu);
+  } else {
+    kv("Total Fresh Cup Lump at Bagsakan",ni(c.totalY)+" kg");
+    kv("DRC equivalent (info only)",ni(c.totalY*0.5)+" kg DRC (50%)");
+  }
   // REMARKS
   if(S.remarks){chk(20);secH("Remarks / Notes");doc.setFontSize(8);doc.setFont("helvetica","normal");doc.setTextColor(44,44,36);const ls=doc.splitTextToSize(S.remarks,pageW-mg*2-6);ls.forEach(ln=>{chk(5);doc.text(ln,mg+3,y);y+=4.5;});y+=4;}
   // CERT
